@@ -24,6 +24,9 @@ connect-api:
 test:
 	$(DOCKER_COMPOSE) run --no-deps --rm api ash -ci 'npm test'
 
+test-watch:
+	$(DOCKER_COMPOSE) run --no-deps --rm api ash -ci 'npm run test:watch'
+
 lint:
 	npm run lint
 
