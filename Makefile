@@ -1,6 +1,8 @@
 MAKEFLAGS += --silent
 
 DOCKER_COMPOSE = docker-compose -p labyrinth-react
+export $UID = $(id -u)
+export $GID = $(id -g)
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -29,5 +31,32 @@ test-watch:
 
 lint:
 	npm run lint
+
+build-front:
+	mkdir -p dist/src
+	cp src/index.html dist/src/
+
+build-server:
+	mkdir -p dist/server
+	cp server/index.js dist/server/
+
+build:
+	rm -rf dist
+	mkdir -p dist
+	$(MAKE) build-front
+	$(MAKE) build-server
+
+deploy-front: build-front
+	aws s3 rm s3://labyrinth-react/*
+	aws s3 sync ./dist/src s3://labyrinth-react/
+
+deploy-server: build-server
+	scp -r Makefile package.json docker-compose.yaml dist/server labyrinth-react:app/
+	ssh labyrinth-react 'cd app && make stop run'
+
+deploy-all: deploy-front deploy-server
+
+clean:
+	rm -rf dist
 
 .DEFAULT_GOAL := help
