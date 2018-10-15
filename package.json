@@ -1,11 +1,12 @@
 {
     "name": "labyrinth-react",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Implements the Labyrinth game ",
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "lint": "./node_modules/.bin/eslint ."
     },
     "repository": {
         "type": "git",
