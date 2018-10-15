@@ -62,3 +62,6 @@ typings/
 
 # docker cache
 var/cache
+
+# mongodb
+data/db
