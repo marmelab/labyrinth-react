@@ -5,10 +5,22 @@ services:
         image: node:10-alpine
         user: '${UID}:${GID}'
         volumes:
-            - '.:/app'
+            - .:/app:delegated
         command: 'node server/index.js'
         environment:
             - HOME=/app/var/cache
         working_dir: /app
         ports:
             - '3000:3000'
+        depends_on:
+            - mongodb
+
+    mongodb:
+        image: mongo
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - ./data/db:/data/db:delegated
+        ports:
+            - '27017:27017'
