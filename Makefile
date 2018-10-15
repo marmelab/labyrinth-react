@@ -33,8 +33,10 @@ lint:
 	npm run lint
 
 build-front:
-	mkdir -p dist/src
-	cp src/index.html dist/src/
+	npm run react-build
+	# mkdir -p dist
+	# cp -rp build/* dist/src/
+	# cp src/index.html dist/src/
 
 build-server:
 	mkdir -p dist/server
@@ -48,7 +50,7 @@ build:
 
 deploy-front: build-front
 	aws s3 rm s3://labyrinth-react/*
-	aws s3 sync ./dist/src s3://labyrinth-react/
+	aws s3 sync ./build s3://labyrinth-react/
 
 deploy-server: build-server
 	scp -r Makefile package.json docker-compose.yaml dist/server labyrinth-react:app/
