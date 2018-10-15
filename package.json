@@ -6,7 +6,7 @@
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
-        "lint": "./node_modules/.bin/eslint ."
+        "lint": "eslint ."
     },
     "repository": {
         "type": "git",
