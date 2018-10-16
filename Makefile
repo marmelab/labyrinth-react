@@ -8,6 +8,7 @@ export $GID = $(id -g)
 
 DIST_SERVER = dist/server
 DIST_CLIENT = dist/client
+FILES_SERVER := $(shell find ./server ! -path "*.spec.js" -type f)
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -63,7 +64,7 @@ build-front:
 build-server:
 	rm -rf $(DIST_SERVER)
 	mkdir -p $(DIST_SERVER)
-	cp server/index.js server/app.js $(DIST_SERVER)
+	cp $(FILES_SERVER) $(DIST_SERVER)
 
 deploy-front: build-front
 	aws s3 rm s3://labyrinth-react --recursive
