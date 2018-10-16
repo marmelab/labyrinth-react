@@ -1,0 +1,14 @@
+version: '3.2'
+
+services:
+    client:
+        image: node:10-alpine
+        user: '${UID}:${GID}'
+        volumes:
+            - .:/app:delegated
+        command: 'npm run react-start'
+        environment:
+            - HOME=/app/var/cache
+        working_dir: /app
+        ports:
+            - '3001:3001'

@@ -5,4 +5,4 @@ app.get('/', function(req, res) {
     res.send('Welcome to Labyrinth application!');
 });
 
-module.exports = { app };
+module.exports = app;

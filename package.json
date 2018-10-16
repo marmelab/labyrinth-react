@@ -2,13 +2,24 @@
     "name": "labyrinth-react",
     "version": "0.0.1",
     "description": "Implements the Labyrinth game ",
-    "main": "index.js",
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watchAll",
         "coverage": "jest --collectCoverageFrom=server/**.js --coverage server",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "react-start": "react-scripts start",
+        "react-build": "react-scripts build",
+        "react-test": "react-scripts test"
     },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/marmelab/labyrinth-react.git"
@@ -23,9 +34,12 @@
     "bugs": {
         "url": "https://github.com/marmelab/labyrinth-react/issues"
     },
-    "homepage": "https://github.com/marmelab/labyrinth-react",
+    "homepage": "http://labyrinth-react.s3-website-eu-west-1.amazonaws.com/",
     "devDependencies": {
-        "eslint": "^5.6.0",
+        "babel-jest": "^23.6.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "eslint": "5.6.0",
         "eslint-config-prettier": "^3.0.1",
         "eslint-plugin-import": "^2.14.0",
         "eslint-plugin-jest": "^21.22.0",
@@ -35,11 +49,15 @@
         "prettier": "^1.14.3",
         "prettier-eslint": "^8.8.2",
         "prettier-eslint-cli": "^4.7.1",
+        "react-test-renderer": "^16.5.2",
         "supertest": "^3.3.0"
     },
     "dependencies": {
         "express": "^4.16.4",
         "immer": "^1.7.2",
-        "minimist": "^1.2.0"
+        "minimist": "^1.2.0",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2",
+        "react-scripts": "2.0.5"
     }
 }
