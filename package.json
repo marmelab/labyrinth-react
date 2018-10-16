@@ -36,6 +36,9 @@
     },
     "homepage": "http://labyrinth-react.s3-website-eu-west-1.amazonaws.com/",
     "devDependencies": {
+        "babel-jest": "^23.6.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
         "eslint": "5.6.0",
         "eslint-config-prettier": "^3.0.1",
         "eslint-plugin-import": "^2.14.0",
@@ -46,6 +49,7 @@
         "prettier": "^1.14.3",
         "prettier-eslint": "^8.8.2",
         "prettier-eslint-cli": "^4.7.1",
+        "react-test-renderer": "^16.5.2",
         "supertest": "^3.3.0"
     },
     "dependencies": {
