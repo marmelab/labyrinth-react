@@ -1,7 +1,8 @@
-const { produce } = require('immer');
+import { produce } from 'immer';
 
-const Type = Object.freeze({ STRAIGHT: '┃', CORNER: '┗', CROSS: '┻' }); // pointing NORTH
-const Direction = Object.freeze({
+export const Type = Object.freeze({ STRAIGHT: '┃', CORNER: '┗', CROSS: '┻' }); // pointing NORTH
+
+export const Direction = Object.freeze({
     NORTH: 0,
     EAST: 1,
     SOUTH: 2,
@@ -17,20 +18,20 @@ const defaultPathCard = {
     id: null,
 };
 
-const getPathCardFactory = () => {
+export const getPathCardFactory = () => {
     let id = 1;
     return (parameters = {}) => Object.freeze(Object.assign({}, defaultPathCard, parameters, { id: id++ }));
 };
 
-const createPathCard = getPathCardFactory();
+export const createPathCard = getPathCardFactory();
 
-const movePathCardTo = (pathCard, toX, toY) =>
+export const movePathCardTo = (pathCard, toX, toY) =>
     produce(pathCard, draft => {
         draft.x = toX;
         draft.y = toY;
     });
 
-function getNextCoordinatesForAMove(x, y, direction) {
+export function getNextCoordinatesForAMove(x, y, direction) {
     switch (direction) {
         case Direction.NORTH:
             return { x: x, y: y + 1 };
@@ -44,9 +45,9 @@ function getNextCoordinatesForAMove(x, y, direction) {
     return null;
 }
 
-const rotateDirection = numberOfQuaters => direction => (4 + direction + numberOfQuaters) % 4;
+export const rotateDirection = numberOfQuaters => direction => (4 + direction + numberOfQuaters) % 4;
 
-const getExitDirections = card => {
+export const getExitDirections = card => {
     switch (card.type) {
         case Type.STRAIGHT:
             return [Direction.NORTH, Direction.SOUTH].map(rotateDirection(card.direction));
@@ -55,15 +56,4 @@ const getExitDirections = card => {
         case Type.CROSS:
             return [Direction.NORTH, Direction.EAST, Direction.WEST].map(rotateDirection(card.direction));
     }
-};
-
-module.exports = {
-    createPathCard,
-    getExitDirections,
-    Type,
-    Direction,
-    rotateDirection,
-    movePathCardTo,
-    getNextCoordinatesForAMove,
-    getPathCardFactory,
 };

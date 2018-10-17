@@ -1,4 +1,4 @@
-const { createEmptyBoard, flattenBoard } = require('./board');
+import { createEmptyBoard, flattenBoard } from './board';
 
 describe('Board', () => {
     const board = createEmptyBoard();

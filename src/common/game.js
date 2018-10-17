@@ -1,37 +1,31 @@
-const { produce } = require('immer');
-
-const {
-    getExitDirections,
-    Direction,
-    rotateDirection,
-    movePathCardTo,
-    getNextCoordinatesForAMove,
-} = require('./pathCard');
-
-const {
+import {
     BOARD_SIZE,
     PATH_CARD_INSERTION_POSITION,
     isInsertionPosition,
     putCardOnBoard,
     getIndexPosition,
-} = require('./board');
+} from './board';
 
-const {
+import { produce } from 'immer';
+
+import { getExitDirections, Direction, rotateDirection, movePathCardTo, getNextCoordinatesForAMove } from './pathCard';
+
+import {
     isCurrentTargetReached,
     removeTargetCardToPlay,
     movePlayerTo,
     moveAllPlayers,
     putPlayersBackOnBoard,
-} = require('./player');
+} from './player';
 
-const { STATE } = require('./constants');
+import { STATE } from './constants';
 
-const { initGame } = require('./gameFactory');
+import { initGame } from './gameFactory';
 
 const NB_PLAYER = 1;
 const NB_TARGET_CARD = 24;
 
-const createGame = () => {
+export const createGame = () => {
     let { board, players, remainingPathCard } = initGame(NB_PLAYER, NB_TARGET_CARD);
     const currentIndexOfPathCardInsertionPosition = 0;
     const { x, y } = PATH_CARD_INSERTION_POSITION[currentIndexOfPathCardInsertionPosition];
@@ -84,7 +78,7 @@ const increasePlayerScoreIfOnTarget = game => {
     });
 };
 
-const movePlayer = (game, direction, godMode = false) => {
+export const movePlayer = (game, direction, godMode = false) => {
     const { board, players, currentPlayerIndex } = game;
     const player = players[currentPlayerIndex];
     const { x, y } = player;
@@ -181,7 +175,7 @@ const moveRemainingPathCard = (game, direction) => {
     });
 };
 
-const setRemainingPathCardAt = (game, x, y) => {
+export const setRemainingPathCardAt = (game, x, y) => {
     const index = getIndexPosition({ x, y });
     const newRemainingCard = movePathCardTo(game.remainingPathCard, x, y);
     return produce(game, draft => {
@@ -305,14 +299,14 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
     return putPlayersBackOnBoard(newGame2);
 };
 
-const insertRemainingPathCard = game => {
+export const insertRemainingPathCard = game => {
     const {
         remainingPathCard: { x, y },
     } = game;
     return computeReachablePositions(increasePlayerScoreIfOnTarget(insertRemainingPathCardAt(game, x, y)));
 };
 
-const insertRemainingPathCardAt = (game, x, y) => {
+export const insertRemainingPathCardAt = (game, x, y) => {
     if (!isInsertionPosition({ x, y })) {
         return game;
     }
@@ -363,22 +357,6 @@ const insertRemainingPathCardAt = (game, x, y) => {
             fixed: x,
         });
     }
-};
 
-module.exports = {
-    NB_PLAYER,
-    NB_TARGET_CARD,
-    movePlayer,
-    createGame,
-    moveRemainingPathCardClockwise,
-    moveRemainingPathCardAntiClockwise,
-    setRemainingPathCardAt,
-    rotateRemainingPathCard,
-    insertRemainingPathCard,
-    insertRemainingPathCardAt,
-    moveCurrentPlayerTo,
-    toNextPlayerTurn,
-    toEndState,
-    toMoveState,
-    toInsertState,
+    return newGame;
 };

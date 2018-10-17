@@ -1,4 +1,4 @@
-const { createPlayer, addTargetCardToPlay } = require('./player');
+import { createPlayer, addTargetCardToPlay } from './player';
 
 describe('Intialized Player', () => {
     it('should use the given parameters, and an empty target card deck', () => {

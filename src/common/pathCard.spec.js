@@ -1,4 +1,4 @@
-const { createPathCard, getExitDirections, Type, Direction, getPathCardFactory } = require('./pathCard');
+import { createPathCard, getExitDirections, Type, Direction, getPathCardFactory } from './pathCard';
 
 test('PathCard constructor with default values', () => {
     const card = createPathCard();

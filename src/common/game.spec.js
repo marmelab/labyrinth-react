@@ -1,16 +1,16 @@
-const { Direction } = require('./pathCard');
+import { Direction } from './pathCard';
 
-const { getCurrentTargetCard } = require('./player');
+import { getCurrentTargetCard } from './player';
 
-const { PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard } = require('./board');
+import { PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard } from './board';
 
-const {
+import {
     movePlayer,
     createGame,
     insertRemainingPathCard,
     insertRemainingPathCardAt,
     setRemainingPathCardAt,
-} = require('./game');
+} from './game';
 
 describe('Game movePlayer', () => {
     const game = createGame();
@@ -119,6 +119,11 @@ describe('insert a pathCard up and down', () => {
     const game = createGame();
     const game1 = insertRemainingPathCard(game);
     const game2 = insertRemainingPathCard(game1);
+
+    it('should be in 1, 7', () => {
+        expect(game1.remainingPathCard.x).toBe(1);
+        expect(game1.remainingPathCard.y).toBe(7);
+    });
 
     it('should be in 1, -1', () => {
         expect(game2.remainingPathCard.x).toBe(1);

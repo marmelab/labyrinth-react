@@ -1,13 +1,5 @@
-const { Type } = require('./pathCard');
-const {
-    initGame,
-    initPlayers,
-    dealCards,
-    buildBoard,
-    buildPathDeck,
-    buildTargetDeck,
-    shuffle,
-} = require('./gameFactory');
+import { Type } from './pathCard';
+import { initGame, initPlayers, dealCards, buildBoard, buildPathDeck, buildTargetDeck, shuffle } from './gameFactory';
 
 describe('Board', () => {
     const { board, targetNumber } = buildBoard();
