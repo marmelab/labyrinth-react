@@ -1,8 +1,12 @@
+.App-header {
+    background-color: #8ca0ff;
+}
+
 .game-board {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(9, 96px);
-    grid-template-rows: repeat(9, 96px);
+    grid-template-columns: repeat(7, 96px);
+    grid-template-rows: repeat(7, 96px);
     grid-column-gap: 1px;
     grid-row-gap: 1px;
 }

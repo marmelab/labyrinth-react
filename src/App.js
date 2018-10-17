@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Tile from './Tile';
 import './App.css';
 import { createGame } from './common/game';
-import { fromBoardReferentialToDisplay, fromDisplayReferentialToBoard } from './common/utils';
+import { flattenBoard } from './common/board';
+
+import { convertBoardXToDisplayX, convertBoardYToDisplayY } from './common/utils';
 
 class App extends Component {
     constructor(props) {
@@ -14,19 +16,19 @@ class App extends Component {
     }
 
     render() {
-        const matrix = [[1, 0, 1], [1, 0, 1], [1, 0, 1]];
-
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
 
                 <div className="game-board">
-                    <Tile x={1} y={1} degrees={0} matrix={matrix} />
-                    <Tile x={2} y={2} degrees={90} matrix={matrix} />
-                    <Tile x={3} y={3} degrees={0} matrix={matrix} />
-                    <Tile x={4} y={4} degrees={90} matrix={matrix} />
-                    <Tile x={5} y={5} degrees={0} matrix={matrix} />
-                    <Tile x={6} y={6} degrees={90} matrix={matrix} />
+                    {flattenBoard(this.state.game.board).map(pathCard => (
+                        <Tile
+                            x={convertBoardXToDisplayX(pathCard.x)}
+                            y={convertBoardYToDisplayY(pathCard.y)}
+                            degrees={90 * pathCard.direction}
+                            type={pathCard.type}
+                        />
+                    ))}
                 </div>
             </div>
         );
@@ -34,14 +36,3 @@ class App extends Component {
 }
 
 export default App;
-
-{
-    /*
-
-{board.map((row,rowIndex) =>
-                    row.map((tile,columnIndex) => (
-                    <Tile x={columnIndex} y={rowIndex} degrees={0} matrix={[[1, 0, 1], [1, 0, 1], [1, 0, 1]]} />
-
-
- */
-}
