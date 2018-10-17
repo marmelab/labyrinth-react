@@ -12,7 +12,7 @@ const Players = ({ players }) => (
     <div className="game-board players">
         {players.map((player, playerIndex) => (
             <div
-                class="player-grid"
+                className="player-grid"
                 style={{ gridColumn: convertBoardXToDisplayX(player.x), gridRow: convertBoardYToDisplayY(player.y) }}
             >
                 <img className="player-image" src={playerNumberToImageName[playerIndex]} />
