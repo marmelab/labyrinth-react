@@ -20,7 +20,7 @@ import {
     putPlayersBackOnBoard,
 } from './player';
 
-const NB_PLAYER = 1;
+const NB_PLAYER = 4;
 const NB_TARGET_CARD = 24;
 
 export const createGame = () => {

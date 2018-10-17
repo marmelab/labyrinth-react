@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Tile from './Tile';
 import './App.css';
-import { createGame } from './common/game';
-import { flattenBoard } from './common/board';
 
-import { convertBoardXToDisplayX, convertBoardYToDisplayY } from './common/utils';
+import Board from './Board';
+import Players from './Players';
+
+import { createGame } from './common/game';
 
 class App extends Component {
     constructor(props) {
@@ -21,18 +21,8 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
-
-                <div className="game-board">
-                    {flattenBoard(board).map(pathCard => (
-                        <Tile
-                            key={pathCard.id}
-                            x={convertBoardXToDisplayX(pathCard.x)}
-                            y={convertBoardYToDisplayY(pathCard.y)}
-                            degrees={90 * pathCard.direction}
-                            type={pathCard.type}
-                        />
-                    ))}
-                </div>
+                <Board board={this.state.game.board} />
+                <Players players={this.state.game.players} />
             </div>
         );
     }
