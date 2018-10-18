@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Board from './Board';
-import Players from './Players';
 
 import { createGame } from './common/game';
 
@@ -21,8 +20,7 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
-                <Board board={board} />
-                <Players players={players} />
+                <Board board={board} players={players} />
             </div>
         );
     }
