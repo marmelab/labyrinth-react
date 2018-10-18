@@ -36,7 +36,7 @@ describe('Game movePlayer', () => {
         expect(playerX === targetX && playerY === targetY).toBeFalsy();
     });
 
-    it('should increase score when target is reached', () => {
+    it.skip('should increase score when target is reached', () => {
         // TODO: add tests
         let { x, y } = { x: playerX, y: playerY };
         const godMode = true;

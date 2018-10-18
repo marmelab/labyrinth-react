@@ -16,13 +16,16 @@ class App extends Component {
     }
 
     render() {
+        const { board } = this.state.game;
+
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
 
                 <div className="game-board">
-                    {flattenBoard(this.state.game.board).map(pathCard => (
+                    {flattenBoard(board).map(pathCard => (
                         <Tile
+                            key={pathCard.id}
                             x={convertBoardXToDisplayX(pathCard.x)}
                             y={convertBoardYToDisplayY(pathCard.y)}
                             degrees={90 * pathCard.direction}

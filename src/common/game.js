@@ -1,3 +1,9 @@
+import { produce } from 'immer';
+
+import { STATE } from './constants';
+import { initGame } from './gameFactory';
+import { getExitDirections, Direction, rotateDirection, movePathCardTo, getNextCoordinatesForAMove } from './pathCard';
+
 import {
     BOARD_SIZE,
     PATH_CARD_INSERTION_POSITION,
@@ -6,10 +12,6 @@ import {
     getIndexPosition,
 } from './board';
 
-import { produce } from 'immer';
-
-import { getExitDirections, Direction, rotateDirection, movePathCardTo, getNextCoordinatesForAMove } from './pathCard';
-
 import {
     isCurrentTargetReached,
     removeTargetCardToPlay,
@@ -17,10 +19,6 @@ import {
     moveAllPlayers,
     putPlayersBackOnBoard,
 } from './player';
-
-import { STATE } from './constants';
-
-import { initGame } from './gameFactory';
 
 const NB_PLAYER = 1;
 const NB_TARGET_CARD = 24;
@@ -83,6 +81,7 @@ export const movePlayer = (game, direction, godMode = false) => {
     const player = players[currentPlayerIndex];
     const { x, y } = player;
     const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
+
     if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length) {
         if (godMode || getExitDirections(board[x][y]).includes(direction)) {
             const nextPathCard = board[nextX][nextY];
@@ -94,8 +93,6 @@ export const movePlayer = (game, direction, godMode = false) => {
                 });
             }
         }
-    } else {
-        //TODO: render impossible move
     }
     return game;
 };
@@ -106,6 +103,7 @@ const positionIsIn = ({ x, y }, positions) =>
 const computeAllReachablePositionsFromXY = (board, x, y) => {
     const result = [];
     const todo = [{ x, y }];
+
     while (todo.length > 0) {
         const position = todo.pop();
         result.push(position);
@@ -120,10 +118,8 @@ const computeAllReachablePositionsFromXY = (board, x, y) => {
     return result;
 };
 
-const computeImmediateReachablePositionsFromXY = (board, x, y) => {
-    const res = [];
-    const directions = Object.values(Direction);
-    directions.forEach(direction => {
+const computeImmediateReachablePositionsFromXY = (board, x, y) =>
+    Object.values(Direction).reduce((res, direction) => {
         const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
         if (
             nextX >= 0 &&
@@ -138,9 +134,8 @@ const computeImmediateReachablePositionsFromXY = (board, x, y) => {
                 res.push({ x: nextX, y: nextY });
             }
         }
-    });
-    return res;
-};
+        return res;
+    }, []);
 
 const computeReachablePositions = game => {
     const newGame = produce(game, draft => {
@@ -169,6 +164,7 @@ const moveRemainingPathCard = (game, direction) => {
     const newIndex = (numberOfPosition + currentIndexOfPathCardInsertionPosition + toAdd) % numberOfPosition;
     const { x: newX, y: newY } = PATH_CARD_INSERTION_POSITION[newIndex];
     const newRemainingCard = movePathCardTo(remainingPathCard, newX, newY);
+
     return produce(game, draft => {
         draft.currentIndexOfPathCardInsertionPosition = newIndex;
         draft.remainingPathCard = newRemainingCard;
