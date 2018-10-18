@@ -16,13 +16,13 @@ class App extends Component {
     }
 
     render() {
-        const { board } = this.state.game;
+        const { board, players } = this.state.game;
 
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
-                <Board board={this.state.game.board} />
-                <Players players={this.state.game.players} />
+                <Board board={board} />
+                <Players players={players} />
             </div>
         );
     }

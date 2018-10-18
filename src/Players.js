@@ -12,6 +12,7 @@ const Players = ({ players }) => (
     <div className="game-board players">
         {players.map((player, playerIndex) => (
             <div
+                key={player.color}
                 className="player-grid"
                 style={{ gridColumn: convertBoardXToDisplayX(player.x), gridRow: convertBoardYToDisplayY(player.y) }}
             >
