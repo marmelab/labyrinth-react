@@ -1,0 +1,27 @@
+.App-header {
+    background-color: #8ca0ff;
+}
+
+.game-board {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(7, 96px);
+    grid-template-rows: repeat(7, 96px);
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+}
+
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+}
+
+.tile-grid.empty:hover {
+    border: solid 1px white;
+    background: rgba(255, 0, 0, 0.4);
+}
+
+.tile-grid .remainingPathCard {
+    justify-self: center;
+}
