@@ -12,28 +12,29 @@ export const buildBoard = () => {
             type: Type.CORNER,
             x: 0,
             y: 0,
-            direction: Direction.NORTH,
+            direction: Direction.EAST,
         },
         {
             type: Type.CROSS,
             x: 2,
             y: 0,
-            direction: Direction.NORTH,
+            direction: Direction.SOUTH,
             target: targetNumber++,
         },
         {
             type: Type.CROSS,
             x: 4,
             y: 0,
-            direction: Direction.NORTH,
+            direction: Direction.SOUTH,
             target: targetNumber++,
         },
         {
             type: Type.CORNER,
             x: 6,
             y: 0,
-            direction: Direction.WEST,
+            direction: Direction.SOUTH,
         },
+
         // row 2
         {
             type: Type.CROSS,
@@ -46,14 +47,14 @@ export const buildBoard = () => {
             type: Type.CROSS,
             x: 2,
             y: 2,
-            direction: Direction.NORTH,
+            direction: Direction.EAST,
             target: targetNumber++,
         },
         {
             type: Type.CROSS,
             x: 4,
             y: 2,
-            direction: Direction.WEST,
+            direction: Direction.SOUTH,
             target: targetNumber++,
         },
         {
@@ -63,6 +64,7 @@ export const buildBoard = () => {
             direction: Direction.WEST,
             target: targetNumber++,
         },
+
         // row 4
         {
             type: Type.CROSS,
@@ -75,14 +77,14 @@ export const buildBoard = () => {
             type: Type.CROSS,
             x: 2,
             y: 4,
-            direction: Direction.EAST,
+            direction: Direction.NORTH,
             target: targetNumber++,
         },
         {
             type: Type.CROSS,
             x: 4,
             y: 4,
-            direction: Direction.SOUTH,
+            direction: Direction.WEST,
             target: targetNumber++,
         },
         {
@@ -92,32 +94,33 @@ export const buildBoard = () => {
             direction: Direction.WEST,
             target: targetNumber++,
         },
+
         // row 6
         {
             type: Type.CORNER,
             x: 0,
             y: 6,
-            direction: Direction.EAST,
+            direction: Direction.NORTH,
         },
         {
             type: Type.CROSS,
             x: 2,
             y: 6,
-            direction: Direction.SOUTH,
+            direction: Direction.NORTH,
             target: targetNumber++,
         },
         {
             type: Type.CROSS,
             x: 4,
             y: 6,
-            direction: Direction.SOUTH,
+            direction: Direction.NORTH,
             target: targetNumber++,
         },
         {
             type: Type.CORNER,
             x: 6,
             y: 6,
-            direction: Direction.SOUTH,
+            direction: Direction.WEST,
         },
     ];
 
@@ -159,10 +162,10 @@ export const shuffle = array =>
 
 export const initPlayers = (board, nbPlayers) => {
     const STARTING_POSITION_FOR_PLAYER = [
-        { x: 0, y: 0, color: 'green' },
-        { x: 0, y: 6, color: 'red' },
-        { x: 6, y: 6, color: 'yellow' },
+        { x: 0, y: 0, color: 'yellow' },
+        { x: 6, y: 6, color: 'green' },
         { x: 6, y: 0, color: 'blue' },
+        { x: 0, y: 6, color: 'red' },
     ];
 
     const players = Object.freeze(
