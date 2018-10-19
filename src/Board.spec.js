@@ -14,18 +14,20 @@ it('renders without crashing', () => {
     ReactDOM.unmountComponentAtNode(div);
 });
 
+it('should render layers', () => {
+    const board = createGame().board;
+    const wrapper = shallow(<Board board={board} players={[{ x: 0, y: 0 }]} />);
+    expect(wrapper.find('.board-game').find('#empty')).toHaveLength(1);
+    expect(wrapper.find('.board-game').find('#ground')).toHaveLength(1);
+    expect(wrapper.find('.board-game').find('#players')).toHaveLength(1);
+    expect(wrapper.find('.board-game').find('#insert-positions')).toHaveLength(1);
+});
+
 it('should contain 7x7 tiles', () => {
     const board = createGame().board;
     const wrapper = shallow(<Board board={board} players={[]} />);
-    expect(wrapper.find('.board-game')).toHaveLength(3);
     expect(wrapper.find('.board-game').find('#ground')).toHaveLength(1);
     expect(wrapper.find(Tile)).toHaveLength(7 * 7);
-});
-
-it('should render a player board', () => {
-    const board = createGame().board;
-    const wrapper = shallow(<Board board={board} players={[{ x: 0, y: 0 }]} />);
-    expect(wrapper.find('.board-game').find('#players')).toHaveLength(1);
 });
 
 it('should contain 24 treasures', () => {

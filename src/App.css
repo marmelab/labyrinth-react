@@ -78,7 +78,6 @@ body {
 
 .insert-position {
     animation: tile-blink 4s infinite;
-
     border: solid 1px white;
     background: rgba(255, 255, 255, 0.4);
 }
