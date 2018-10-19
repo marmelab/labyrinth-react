@@ -10,36 +10,43 @@ const playerNumberToImageName = {
     3: 'images/piece_purple96.png',
 };
 
+const getPlayerImage = (players, x, y) => {
+    const index = players.findIndex(player => player.x === x && player.y === y);
+    return index > -1 ? playerNumberToImageName[index] : null;
+};
+
 const Board = ({ board, players }) => (
     <div className="board">
-        <div className="game-board">
-            {flattenBoard(board).map(pathCard => (
-                <Tile
-                    key={pathCard.id}
-                    x={convertBoardXToDisplayX(pathCard.x)}
-                    y={convertBoardYToDisplayY(pathCard.y)}
-                    degrees={90 * pathCard.direction}
-                    type={pathCard.type}
-                />
+        <div className="board-game" id="empty" />
+
+        <div className="board-game" id="ground">
+            {board.map((row, rowIndex) => (
+                <div className="row" key={`board-game ${rowIndex}`}>
+                    {row.map((pathCard, columnIndex) => (
+                        <div className="box" key={`box ${rowIndex}-${columnIndex}`}>
+                            <Tile key={pathCard.id} degrees={90 * pathCard.direction} type={pathCard.type} />
+                        </div>
+                    ))}
+                </div>
             ))}
         </div>
 
-        <div className="game-board players">
-            {players.map((player, playerIndex) => {
-                const image = playerNumberToImageName[playerIndex];
-                return (
-                    <div
-                        key={image}
-                        className="player-grid"
-                        style={{
-                            gridColumn: convertBoardXToDisplayX(player.x),
-                            gridRow: convertBoardYToDisplayY(player.y),
-                        }}
-                    >
-                        <img className="player-image" src={image} />
-                    </div>
-                );
-            })}
+        <div className="board-game" id="players">
+            {board.map((row, rowIndex) => (
+                <div className="row" key={`players ${rowIndex}`}>
+                    {row.map((pathCard, columnIndex) => {
+                        const image = getPlayerImage(players, columnIndex, rowIndex);
+                        const key = `${columnIndex}-${rowIndex}`;
+                        return (
+                            <div className="box" key={key}>
+                                <div className="player" key={key}>
+                                    {image ? <img key={key} className="player-image" src={image} /> : <div key={key} />}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            ))}
         </div>
     </div>
 );
