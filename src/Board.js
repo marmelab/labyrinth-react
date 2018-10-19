@@ -15,10 +15,36 @@ const getPlayerImage = (players, x, y) => {
     return index > -1 ? playerNumberToImageName[index] : null;
 };
 
+const treasures = [
+    '💌',
+    '💣',
+    '🛍',
+    '📿',
+    '🔭',
+    '💎',
+    '💰',
+    '📜',
+    '🗿',
+    '🏺',
+    '🔫',
+    '🛡',
+    '💈',
+    '🛎',
+    '⌛',
+    '🌡',
+    '⛱',
+    '🎈',
+    '🎎',
+    '🎁',
+    '🔮',
+    '📷',
+    '🕯',
+    '?',
+];
+
 const Board = ({ board, players }) => (
     <div className="board">
         <div className="board-game" id="empty" />
-
         <div className="board-game" id="ground">
             {board.map((row, rowIndex) => (
                 <div className="row" key={`board-game ${rowIndex}`}>
@@ -40,6 +66,23 @@ const Board = ({ board, players }) => (
                         return (
                             <div className="box" key={key}>
                                 <div className="player">{image && <img className="player-image" src={image} />}</div>
+                            </div>
+                        );
+                    })}
+                </div>
+            ))}
+        </div>
+
+        <div className="board-game" id="treasures">
+            {board.map((row, rowIndex) => (
+                <div className="row" key={`treasures ${rowIndex}`}>
+                    {row.map((pathCard, columnIndex) => {
+                        const key = `${columnIndex}-${rowIndex}`;
+                        return (
+                            <div className="box" key={key}>
+                                {pathCard.target != null && (
+                                    <div className="treasure">{treasures[pathCard.target]}</div>
+                                )}
                             </div>
                         );
                     })}
