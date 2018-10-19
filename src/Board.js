@@ -39,9 +39,7 @@ const Board = ({ board, players }) => (
                         const key = `${columnIndex}-${rowIndex}`;
                         return (
                             <div className="box" key={key}>
-                                <div className="player" key={key}>
-                                    {image ? <img key={key} className="player-image" src={image} /> : <div key={key} />}
-                                </div>
+                                <div className="player">{image && <img className="player-image" src={image} />}</div>
                             </div>
                         );
                     })}
