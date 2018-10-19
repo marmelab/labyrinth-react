@@ -77,8 +77,18 @@ body {
 }
 
 .insert-position {
+    animation: tile-blink 4s infinite;
+
     border: solid 1px white;
-    background: rgba(255, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes tile-blink {
+    0% {
+    }
+    50% {
+        background: rgba(255, 255, 255, 0);
+    }
 }
 
 .player-image {
