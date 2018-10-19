@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import { shallow, render } from 'enzyme';
 
 import Board from './Board';
 import Tile from './Tile';
@@ -26,4 +26,12 @@ it('should render a player board', () => {
     const board = createGame().board;
     const wrapper = shallow(<Board board={board} players={[{ x: 0, y: 0 }]} />);
     expect(wrapper.find('.board-game').find('#players')).toHaveLength(1);
+});
+
+it('should contain 24 treasures', () => {
+    const game = createGame();
+    const board = game.board;
+    const wrapper = render(<Board board={board} players={[]} />);
+    const remainingTreasure = game.remainingPathCard.target != null ? 1 : 0;
+    expect(wrapper.find('.treasure')).toHaveLength(24 - remainingTreasure);
 });

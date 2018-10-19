@@ -2,6 +2,7 @@ import * as React from 'react';
 import { convertBoardXToDisplayX, convertBoardYToDisplayY } from './common/utils';
 import Tile from './Tile';
 import { flattenBoard } from './common/board';
+import { treasures } from './App';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -18,13 +19,12 @@ const getPlayerImage = (players, x, y) => {
 const Board = ({ board, players }) => (
     <div className="board">
         <div className="board-game" id="empty" />
-
         <div className="board-game" id="ground">
             {board.map((row, rowIndex) => (
                 <div className="row" key={`board-game ${rowIndex}`}>
                     {row.map((pathCard, columnIndex) => (
                         <div className="box" key={`box ${rowIndex}-${columnIndex}`}>
-                            <Tile key={pathCard.id} degrees={90 * pathCard.direction} type={pathCard.type} />
+                            <Tile degrees={90 * pathCard.direction} type={pathCard.type} target={pathCard.target} />
                         </div>
                     ))}
                 </div>
@@ -39,7 +39,9 @@ const Board = ({ board, players }) => (
                         const key = `${columnIndex}-${rowIndex}`;
                         return (
                             <div className="box" key={key}>
-                                <div className="player">{image && <img className="player-image" src={image} />}</div>
+                                <div className="centered-content">
+                                    {image && <img className="player-image" src={image} />}
+                                </div>
                             </div>
                         );
                     })}

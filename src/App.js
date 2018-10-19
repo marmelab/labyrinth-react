@@ -6,6 +6,33 @@ import PlayerCards from './PlayerCards';
 
 import { createGame } from './common/game';
 
+export const treasures = [
+    '💌',
+    '💣',
+    '🛍',
+    '📿',
+    '🔭',
+    '💎',
+    '💰',
+    '📜',
+    '🗿',
+    '🏺',
+    '🔫',
+    '🛡',
+    '💈',
+    '🛎',
+    '⌛',
+    '🌡',
+    '⛱',
+    '🎈',
+    '🎎',
+    '🎁',
+    '🔮',
+    '📷',
+    '🕯',
+    '?',
+];
+
 class App extends Component {
     constructor(props) {
         super(props);
