@@ -9,7 +9,7 @@ const typeToMatrix = {
 };
 
 const Tile = ({ degrees, type }) => (
-    <div className="tile">
+    <div className="centered-content">
         <img className="tile-image" style={{ transform: `rotate(${degrees}deg)` }} src={typeToMatrix[type]} />
     </div>
 );

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { convertBoardXToDisplayX, convertBoardYToDisplayY } from './common/utils';
 import Tile from './Tile';
 import { flattenBoard } from './common/board';
+import { treasures } from './App';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -14,33 +15,6 @@ const getPlayerImage = (players, x, y) => {
     const index = players.findIndex(player => player.x === x && player.y === y);
     return index > -1 ? playerNumberToImageName[index] : null;
 };
-
-const treasures = [
-    '💌',
-    '💣',
-    '🛍',
-    '📿',
-    '🔭',
-    '💎',
-    '💰',
-    '📜',
-    '🗿',
-    '🏺',
-    '🔫',
-    '🛡',
-    '💈',
-    '🛎',
-    '⌛',
-    '🌡',
-    '⛱',
-    '🎈',
-    '🎎',
-    '🎁',
-    '🔮',
-    '📷',
-    '🕯',
-    '?',
-];
 
 const Board = ({ board, players }) => (
     <div className="board">
@@ -65,7 +39,9 @@ const Board = ({ board, players }) => (
                         const key = `${columnIndex}-${rowIndex}`;
                         return (
                             <div className="box" key={key}>
-                                <div className="player">{image && <img className="player-image" src={image} />}</div>
+                                <div className="centered-content">
+                                    {image && <img className="player-image" src={image} />}
+                                </div>
                             </div>
                         );
                     })}
@@ -81,7 +57,7 @@ const Board = ({ board, players }) => (
                         return (
                             <div className="box" key={key}>
                                 {pathCard.target != null && (
-                                    <div className="treasure">{treasures[pathCard.target]}</div>
+                                    <div className="centered-content treasure">{treasures[pathCard.target]}</div>
                                 )}
                             </div>
                         );
