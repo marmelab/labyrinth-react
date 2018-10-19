@@ -16,6 +16,23 @@ const getPlayerImage = (players, x, y) => {
     return index > -1 ? playerNumberToImageName[index] : null;
 };
 
+const insert_positions = [
+    { x: 0, y: 1 },
+    { x: 0, y: 3 },
+    { x: 0, y: 5 },
+    { x: 6, y: 1 },
+    { x: 6, y: 3 },
+    { x: 6, y: 5 },
+    { x: 1, y: 0 },
+    { x: 3, y: 0 },
+    { x: 5, y: 0 },
+    { x: 1, y: 6 },
+    { x: 3, y: 6 },
+    { x: 5, y: 6 },
+];
+
+const isInsertPosition = (x, y) => insert_positions.findIndex(position => position.x === x && position.y === y) > -1;
+
 const Board = ({ board, players }) => (
     <div className="board">
         <div className="board-game" id="empty" />
@@ -36,15 +53,31 @@ const Board = ({ board, players }) => (
                 <div className="row" key={`players ${rowIndex}`}>
                     {row.map((pathCard, columnIndex) => {
                         const image = getPlayerImage(players, columnIndex, rowIndex);
-                        const key = `${columnIndex}-${rowIndex}`;
                         return (
-                            <div className="box" key={key}>
+                            <div className="box" key={`${columnIndex}-${rowIndex}`}>
                                 <div className="centered-content">
                                     {image && <img className="player-image" src={image} />}
                                 </div>
                             </div>
                         );
                     })}
+                </div>
+            ))}
+        </div>
+
+        <div className="board-game" id="insert-positions">
+            {board.map((row, rowIndex) => (
+                <div className="row" key={`insert-positions ${rowIndex}`}>
+                    {row.map((_, columnIndex) => (
+                        <div className="box" key={`${columnIndex}-${rowIndex}`}>
+                            {isInsertPosition(columnIndex, rowIndex) && (
+                                <a
+                                    className="centered-content insert-position"
+                                    href={`insertRemainingPathCard/x/${columnIndex}/y/${rowIndex}`}
+                                />
+                            )}
+                        </div>
+                    ))}
                 </div>
             ))}
         </div>

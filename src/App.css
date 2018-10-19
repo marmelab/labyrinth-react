@@ -70,6 +70,17 @@ body {
     width: 100%;
 }
 
+#insert-positions {
+    position: absolute;
+    top: 23px;
+    width: 100%;
+}
+
+.insert-position {
+    border: solid 1px white;
+    background: rgba(255, 0, 0, 0.4);
+}
+
 .player-image {
     width: 50%;
     margin-bottom: 16px;

@@ -14,7 +14,7 @@ const Tile = ({ degrees, type, target }) => (
         <div className="centered-content">
             <img className="tile-image" style={{ transform: `rotate(${degrees}deg)` }} src={typeToMatrix[type]} />
         </div>
-        {target != null && <div className="centered-content treasure">{treasures[target]}</div>}
+        {target !== null && <div className="centered-content treasure">{treasures[target]}</div>}
     </React.Fragment>
 );
 
