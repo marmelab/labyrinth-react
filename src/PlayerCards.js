@@ -9,13 +9,12 @@ const PlayerCards = ({ remainingPathCard }) => (
             <div className="box" />
             <div className="box" />
             <div className="box">
-                <div className="centered-content remainingPathCard">
-                    <Tile x={0} y={0} degrees={90 * remainingPathCard.direction} type={remainingPathCard.type} />
-                </div>
-
-                {remainingPathCard.target != null && (
-                    <div className="centered-content treasure">{treasures[remainingPathCard.target]}</div>
-                )}
+                <Tile
+                    key={remainingPathCard.id}
+                    degrees={90 * remainingPathCard.direction}
+                    type={remainingPathCard.type}
+                    target={remainingPathCard.target}
+                />
             </div>
             <div className="box" />
             <div className="box" />

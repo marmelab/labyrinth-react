@@ -70,12 +70,6 @@ body {
     width: 100%;
 }
 
-#treasures {
-    position: absolute;
-    top: 23px;
-    width: 100%;
-}
-
 .player-image {
     width: 50%;
     margin-bottom: 16px;

@@ -24,7 +24,12 @@ const Board = ({ board, players }) => (
                 <div className="row" key={`board-game ${rowIndex}`}>
                     {row.map((pathCard, columnIndex) => (
                         <div className="box" key={`box ${rowIndex}-${columnIndex}`}>
-                            <Tile key={pathCard.id} degrees={90 * pathCard.direction} type={pathCard.type} />
+                            <Tile
+                                key={pathCard.id}
+                                degrees={90 * pathCard.direction}
+                                type={pathCard.type}
+                                target={pathCard.target}
+                            />
                         </div>
                     ))}
                 </div>
@@ -42,23 +47,6 @@ const Board = ({ board, players }) => (
                                 <div className="centered-content">
                                     {image && <img className="player-image" src={image} />}
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            ))}
-        </div>
-
-        <div className="board-game" id="treasures">
-            {board.map((row, rowIndex) => (
-                <div className="row" key={`treasures ${rowIndex}`}>
-                    {row.map((pathCard, columnIndex) => {
-                        const key = `${columnIndex}-${rowIndex}`;
-                        return (
-                            <div className="box" key={key}>
-                                {pathCard.target != null && (
-                                    <div className="centered-content treasure">{treasures[pathCard.target]}</div>
-                                )}
                             </div>
                         );
                     })}
