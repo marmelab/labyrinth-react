@@ -3,24 +3,15 @@ import * as React from 'react';
 import { Type } from './common/pathCard';
 
 const typeToMatrix = {
-    [Type.CORNER]: [[1, 0, 1], [1, 0, 0], [1, 1, 1]],
-    [Type.CROSS]: [[1, 0, 1], [0, 0, 0], [1, 1, 1]],
-    [Type.STRAIGHT]: [[1, 0, 1], [1, 0, 1], [1, 0, 1]],
+    [Type.CORNER]: 'images/corner96.png',
+    [Type.CROSS]: 'images/cross96.png',
+    [Type.STRAIGHT]: 'images/straight96.png',
 };
 
-const Tile = ({ x, y, degrees, type }) => (
-    <div className="tile-grid" style={{ gridColumn: x, gridRow: y, transform: `rotate(${degrees}deg)` }}>
-        {typeToMatrix[type].map((row, rowIndex) =>
-            row.map((isWall, columnIndex) => (
-                <div
-                    className="tile-asset"
-                    key={`${columnIndex}_${rowIndex}`}
-                    style={{ gridColumn: columnIndex + 1, gridRow: rowIndex + 1 }}
-                >
-                    <img className="tile-image" src={'images/' + (isWall ? 'bricks32' : 'stones32') + '.png'} />
-                </div>
-            ))
-        )}
+const Tile = ({ degrees, type }) => (
+    <div className="tile">
+        <img className="tile-image" style={{ transform: `rotate(${degrees}deg)` }} src={typeToMatrix[type]} />
     </div>
 );
+
 export default Tile;

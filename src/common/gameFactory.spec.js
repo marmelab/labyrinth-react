@@ -25,7 +25,7 @@ describe('Board', () => {
     it('should only contain target paths which are either a CORNER or a CROSS', () => {
         board.forEach((column, x) => {
             column.forEach((card, y) => {
-                if (x % 2 == 0 && y % 2 == 0) {
+                if (x % 2 === 0 && y % 2 === 0) {
                     expect(card).not.toBeNull();
                     expect(card.type == Type.CORNER || card.type == Type.CROSS).toBeTruthy();
                     expect(card.x).toBe(x);
@@ -93,8 +93,8 @@ describe('InitPlayers with 1 player', () => {
         expect(players).toHaveLength(1);
     });
 
-    it('should be green and be in (0,0)', () => {
-        expect(players[0].color).toEqual('green');
+    it('should be yellow and be in (0,0)', () => {
+        expect(players[0].color).toEqual('yellow');
         expect(players[0].x).toBe(0);
         expect(players[0].y).toBe(0);
         expect(players[0].targetCards).toHaveLength(0);
@@ -110,28 +110,28 @@ describe('InitPlayers with 4 player', () => {
         expect(players).toHaveLength(4);
     });
 
-    it('should assign the green color to player 0', () => {
-        expect(players[0].color).toEqual('green');
+    it('should assign the yellow color to player 0', () => {
+        expect(players[0].color).toEqual('yellow');
         expect(players[0].x).toBe(0);
         expect(players[0].y).toBe(0);
         expect(players[0].targetCards).toHaveLength(0);
     });
-    it('should assign the red color to player 1', () => {
-        expect(players[1].color).toEqual('red');
-        expect(players[1].x).toBe(0);
+    it('should assign the green color to player 1', () => {
+        expect(players[1].color).toEqual('green');
+        expect(players[1].x).toBe(6);
         expect(players[1].y).toBe(6);
         expect(players[1].targetCards).toHaveLength(0);
     });
-    it('should assign the yellow color to player 2', () => {
-        expect(players[2].color).toEqual('yellow');
+    it('should assign the blue color to player 2', () => {
+        expect(players[2].color).toEqual('blue');
         expect(players[2].x).toBe(6);
-        expect(players[2].y).toBe(6);
+        expect(players[2].y).toBe(0);
         expect(players[2].targetCards).toHaveLength(0);
     });
-    it('should assign the blue color to player 3', () => {
-        expect(players[3].color).toEqual('blue');
-        expect(players[3].x).toBe(6);
-        expect(players[3].y).toBe(0);
+    it('should assign the red color to player 3', () => {
+        expect(players[3].color).toEqual('red');
+        expect(players[3].x).toBe(0);
+        expect(players[3].y).toBe(6);
         expect(players[3].targetCards).toHaveLength(0);
     });
 });

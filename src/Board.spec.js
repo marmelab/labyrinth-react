@@ -17,20 +17,13 @@ it('renders without crashing', () => {
 it('should contain 7x7 tiles', () => {
     const board = createGame().board;
     const wrapper = shallow(<Board board={board} players={[]} />);
-    expect(wrapper.find('.game-board')).toHaveLength(2);
+    expect(wrapper.find('.board-game')).toHaveLength(3);
+    expect(wrapper.find('.board-game').find('#ground')).toHaveLength(1);
     expect(wrapper.find(Tile)).toHaveLength(7 * 7);
 });
 
 it('should render a player board', () => {
     const board = createGame().board;
-    const wrapper = shallow(<Board board={board} players={[0]} />);
-    expect(wrapper.find('.game-board.players')).toHaveLength(1);
-    expect(wrapper).toHaveLength(1);
-});
-
-it('should contain 2 players', () => {
-    const board = createGame().board;
-    const wrapper = shallow(<Board board={board} players={[0, 1]} />);
-    expect(wrapper.find('.player-grid')).toHaveLength(2);
-    expect(wrapper.find('.player-image')).toHaveLength(2);
+    const wrapper = shallow(<Board board={board} players={[{ x: 0, y: 0 }]} />);
+    expect(wrapper.find('.board-game').find('#players')).toHaveLength(1);
 });

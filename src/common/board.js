@@ -18,8 +18,7 @@ export const PATH_CARD_INSERTION_POSITION = Object.freeze([
     { x: -1, y: 1 },
 ]);
 
-export const createEmptyBoard = () =>
-    produce({}, () => Array.from({ length: BOARD_SIZE }, () => Array.from({ length: BOARD_SIZE }, () => 0)));
+export const createEmptyBoard = () => produce({}, () => Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0)));
 
 export const flattenBoard = board => board.reduce((acc, val) => acc.concat(val), []);
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Board from './Board';
+import PlayerCards from './PlayerCards';
 
 import { createGame } from './common/game';
 
@@ -15,12 +16,14 @@ class App extends Component {
     }
 
     render() {
-        const { board, players } = this.state.game;
-
+        const { board, players, remainingPathCard } = this.state.game;
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
-                <Board board={board} players={players} />
+                <div className="game-container">
+                    <Board board={board} players={players} />
+                    <PlayerCards remainingPathCard={remainingPathCard} />
+                </div>
             </div>
         );
     }
