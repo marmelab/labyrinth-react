@@ -24,12 +24,7 @@ const Board = ({ board, players }) => (
                 <div className="row" key={`board-game ${rowIndex}`}>
                     {row.map((pathCard, columnIndex) => (
                         <div className="box" key={`box ${rowIndex}-${columnIndex}`}>
-                            <Tile
-                                key={pathCard.id}
-                                degrees={90 * pathCard.direction}
-                                type={pathCard.type}
-                                target={pathCard.target}
-                            />
+                            <Tile degrees={90 * pathCard.direction} type={pathCard.type} target={pathCard.target} />
                         </div>
                     ))}
                 </div>

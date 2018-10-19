@@ -10,7 +10,6 @@ const PlayerCards = ({ remainingPathCard }) => (
             <div className="box" />
             <div className="box">
                 <Tile
-                    key={remainingPathCard.id}
                     degrees={90 * remainingPathCard.direction}
                     type={remainingPathCard.type}
                     target={remainingPathCard.target}
