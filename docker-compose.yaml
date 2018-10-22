@@ -6,7 +6,7 @@ services:
         user: '${UID}:${GID}'
         volumes:
             - .:/app:delegated
-        command: 'node server/index.js'
+        command: './node_modules/.bin/nodemon --exec babel-node server/index.js'
         environment:
             - HOME=/app/var/cache
         working_dir: /app

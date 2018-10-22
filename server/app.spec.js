@@ -6,7 +6,7 @@ describe('Test the root path', () => {
         return request(app)
             .get('/')
             .expect(200, (_, response) => {
-                expect(response.text).toBe('Welcome to Labyrinth application!');
+                expect(response.text).toEqual(expect.stringContaining('Welcome to Labyrinth'));
                 done();
             });
     });
