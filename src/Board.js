@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { convertBoardXToDisplayX, convertBoardYToDisplayY } from './common/utils';
 import Tile from './Tile';
-import { flattenBoard } from './common/board';
-import { treasures } from './App';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
