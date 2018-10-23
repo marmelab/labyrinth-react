@@ -43,7 +43,7 @@ export const createGame = () => {
     return computeReachablePositions(game);
 };
 
-const toInsertState = game =>
+export const toInsertState = game =>
     produce(game, draft => {
         draft.state = STATE.TO_INSERT;
     });
@@ -184,10 +184,11 @@ const moveRemainingPathCardClockwise = game => moveRemainingPathCard(game, Direc
 
 const moveRemainingPathCardAntiClockwise = game => moveRemainingPathCard(game, Direction.WEST);
 
-const rotateRemainingPathCard = game => {
+// deltaDirection=1 for clokwise, -1 for anti-clockwise
+export const rotateRemainingPathCard = (game, deltaDirection = 1) => {
     const { remainingPathCard } = game;
     const newRemainingPathCard = produce(remainingPathCard, draft => {
-        draft.direction = (remainingPathCard.direction + 1) % 4;
+        draft.direction = (remainingPathCard.direction + deltaDirection) % 4;
     });
     return computeReachablePositions(
         produce(game, draft => {

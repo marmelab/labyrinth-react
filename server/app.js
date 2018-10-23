@@ -1,4 +1,4 @@
-import { createGame } from '../src/common/game';
+import { createGame, rotateRemainingPathCard, toInsertState } from '../src/common/game';
 import mongoose from 'mongoose';
 
 const express = require('express');
@@ -23,9 +23,10 @@ const GameModel = require('./gameModel');
 app.get('/', (req, res) => res.status(200).json({ msg: 'Welcome to Labyrinth API server' }));
 
 app.post('/createGame', (req, res) => {
-    const jsonGame = createGame();
-    let game = new GameModel(jsonGame);
-    game.save()
+    const game = createGame();
+    let gameModel = new GameModel(game);
+    gameModel
+        .save()
         .then(game => {
             res.status(200).json(game);
         })
@@ -35,12 +36,36 @@ app.post('/createGame', (req, res) => {
         });
 });
 
-app.get('/joinGame/:id', (req, res) => {
+app.get('/getGame/:id', (req, res) => {
     GameModel.findById(req.params.id, function(err, game) {
         if (err) {
             console.log(err);
         } else {
             res.json(game);
+        }
+    });
+});
+
+app.post('/rotateRemainingPathCard', (req, res) => {
+    const id = req.body;
+    console.log('server rotateRemainingPathCard id=', id);
+    GameModel.findById(id, function(err, game) {
+        if (err) {
+            console.log(err);
+        } else {
+            let newGame = rotateRemainingPathCard(game, 1);
+            newGame = toInsertState(newGame);
+            let gameModel = new GameModel(newGame);
+
+            gameModel
+                .save()
+                .then(game => {
+                    res.status(200).json(game);
+                })
+                .catch(err => {
+                    res.status(400).send('unable to save to database');
+                    console.log(err);
+                });
         }
     });
 });

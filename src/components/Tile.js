@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Type } from './common/pathCard';
+import { Type } from '../common/pathCard';
 import { treasures } from './App';
 
 const typeToMatrix = {
@@ -9,13 +9,13 @@ const typeToMatrix = {
     [Type.STRAIGHT]: 'images/straight96.png',
 };
 
-const Tile = ({ degrees, type, target }) => (
-    <React.Fragment>
+const Tile = ({ degrees, type, target, onClick }) => (
+    <div onClick={onClick}>
         <div className="centered-content">
             <img className="tile-image" style={{ transform: `rotate(${degrees}deg)` }} src={typeToMatrix[type]} />
         </div>
         {target !== null && <div className="centered-content treasure">{treasures[target]}</div>}
-    </React.Fragment>
+    </div>
 );
 
 export default Tile;

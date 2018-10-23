@@ -1,8 +1,12 @@
-import * as React from 'react';
-import Tile from './Tile';
-import { treasures } from './App';
+import React from 'react';
 
-const PlayerCards = ({ remainingPathCard }) => (
+import { connect } from 'react-redux';
+
+import { rotateRemainingPathcardClockwise } from '../actions/index';
+
+import Tile from './Tile';
+
+const PlayerCards = ({ remainingPathCard, onRotateRemainingPathCard }) => (
     <div className="board">
         <div className="row">
             <div className="box" />
@@ -13,6 +17,7 @@ const PlayerCards = ({ remainingPathCard }) => (
                     degrees={90 * remainingPathCard.direction}
                     type={remainingPathCard.type}
                     target={remainingPathCard.target}
+                    onClick={onRotateRemainingPathCard}
                 />
             </div>
             <div className="box" />
@@ -22,4 +27,15 @@ const PlayerCards = ({ remainingPathCard }) => (
     </div>
 );
 
-export default PlayerCards;
+const mapDispatchToProps = dispatch => {
+    return {
+        onRotateRemainingPathCard: () => {
+            dispatch(rotateRemainingPathcardClockwise());
+        },
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(PlayerCards);

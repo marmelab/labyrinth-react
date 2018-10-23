@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { createGame } from '../common/game';
+
 import Board from './Board';
 import PlayerCards from './PlayerCards';
-
-import { createGame } from './common/game';
-
-import CreateGame from './containers/CreateGame';
+import NewGame from './NewGame';
 
 class App extends Component {
     constructor(props) {
@@ -25,7 +24,7 @@ class App extends Component {
                 <div className="game-container">
                     <Board board={board} players={players} />
                     <PlayerCards remainingPathCard={remainingPathCard} />
-                    <CreateGame />
+                    <NewGame />
                 </div>
             </div>
         );
