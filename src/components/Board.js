@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Tile from './Tile';
-import { CREATE_GAME } from '../actions/types';
 import connect from 'react-redux/es/connect/connect';
 
 const playerNumberToImageName = {
