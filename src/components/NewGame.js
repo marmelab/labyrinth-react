@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { createGame } from '../actions';
+import { CREATE_GAME } from '../actions/types';
 
 const NewGame = ({ onCreateGame }) => (
     <div>

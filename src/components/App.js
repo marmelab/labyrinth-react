@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { createGame } from '../common/game';
-
 import Board from './Board';
 import PlayerCards from './PlayerCards';
 import NewGame from './NewGame';
@@ -10,20 +8,15 @@ import NewGame from './NewGame';
 class App extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            game: createGame(),
-        };
     }
 
     render() {
-        const { board, players, remainingPathCard } = this.state.game;
         return (
             <div className="App">
                 <header className="App-header">Welcome to Labyrinth React!</header>
                 <div className="game-container">
-                    <Board board={board} players={players} />
-                    <PlayerCards remainingPathCard={remainingPathCard} />
+                    <Board />
+                    <PlayerCards />
                     <NewGame />
                 </div>
             </div>

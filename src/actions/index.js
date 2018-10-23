@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CREATE_GAME, ROTATE_REMAINING_PATHCARD_CLOCKWISE } from './types';
+import { CREATE_GAME, CREATE_GAME_SUCCESS, ROTATE_REMAINING_PATHCARD_CLOCKWISE } from './types';
 
 const apiUrl = 'http://localhost:3000';
 
@@ -16,6 +16,13 @@ export const createGame = () => {
             });
     };
 };
+
+const createGameSuccess = data => ({
+    type: CREATE_GAME_SUCCESS,
+    payload: {
+        game: data,
+    },
+});
 
 export const rotateRemainingPathcardClockwise = () => {
     return dispatch => {
@@ -35,13 +42,6 @@ export const rotateRemainingPathcardClockwise = () => {
             });
     };
 };
-
-const createGameSuccess = data => ({
-    type: CREATE_GAME,
-    payload: {
-        body: data.body,
-    },
-});
 
 const rotateRemainingPathcardClockwiseSuccess = data => ({
     type: ROTATE_REMAINING_PATHCARD_CLOCKWISE,

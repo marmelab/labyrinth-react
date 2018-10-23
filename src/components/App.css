@@ -17,6 +17,12 @@ body {
     margin: 0 auto;
 }
 
+#start-new-game {
+    width: 100%;
+    height:400px;
+    background-color: tomato;
+}
+
 .board-game {
     margin: 0 auto;
     width: 80vw;
@@ -51,6 +57,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 
 #empty {
     position: relative;
