@@ -48,12 +48,12 @@ export const toInsertState = game =>
         draft.state = STATE.TO_INSERT;
     });
 
-const toMoveState = game =>
+export const toMoveState = game =>
     produce(game, draft => {
         draft.state = STATE.TO_MOVE;
     });
 
-const toEndState = game =>
+export const toEndState = game =>
     produce(game, draft => {
         draft.state = STATE.END;
     });
@@ -303,13 +303,18 @@ export const insertRemainingPathCard = game => {
 };
 
 export const insertRemainingPathCardAt = (game, x, y) => {
+    console.log('insertRemainingPathCardAt ', { x, y });
+
     if (!isInsertionPosition({ x, y })) {
+        console.log('not an isInsertionPosition: identity');
         return game;
     }
 
     const newGame = setRemainingPathCardAt(game, x, y);
 
     if (x < 0) {
+        console.log('case 1');
+
         return doShift({
             game: newGame,
             shiftFunction: shiftRowRight,
@@ -321,6 +326,8 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (x >= BOARD_SIZE) {
+        console.log('case 2');
+
         return doShift({
             game: newGame,
             shiftFunction: shiftRowLeft,
@@ -332,6 +339,8 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (y < 0) {
+        console.log('case 3');
+
         return doShift({
             game: newGame,
             shiftFunction: shiftColumnUp,
@@ -343,6 +352,8 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (y >= BOARD_SIZE) {
+        console.log('case 4');
+
         return doShift({
             game: newGame,
             shiftFunction: shiftColumnDown,
@@ -353,6 +364,8 @@ export const insertRemainingPathCardAt = (game, x, y) => {
             fixed: x,
         });
     }
+
+    console.log('did nothing');
 
     return newGame;
 };
