@@ -1,21 +1,6 @@
 version: '3.2'
 
 services:
-    api:
-        image: node:10-alpine
-        user: '${UID}:${GID}'
-        volumes:
-            - .:/app
-        command: './node_modules/.bin/nodemon --exec babel-node server/index.js'
-        environment:
-            - HOME=/app/var/cache
-        working_dir: /app
-        ports:
-            - '3000:3000'
-        depends_on:
-            - mongodb
-        links:
-            - mongodb
 
     mongodb:
         image: mongo

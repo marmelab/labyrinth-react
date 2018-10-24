@@ -1,24 +1,18 @@
 import axios from 'axios';
-import { rotateRemainingPathCard } from '../common/game';
 
+import { rotateRemainingPathCard } from '../common/game';
+import { apiUrl } from '../config';
 import {
     CREATE_GAME_SUCCESS,
     ROTATE_REMAINING_PATHCARD_CLOCKWISE,
     ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC,
 } from './types';
 
-const apiUrl = 'http://localhost:3000';
-
 export const createGame = () => {
     return dispatch => {
-        return axios
-            .post(`${apiUrl}/createGame`)
-            .then(response => {
-                dispatch(createGameSuccess(response.data));
-            })
-            .catch(error => {
-                throw error;
-            });
+        return axios.post(`${apiUrl}/createGame`).then(response => {
+            dispatch(createGameSuccess(response.data));
+        });
     };
 };
 

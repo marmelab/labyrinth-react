@@ -1,6 +1,8 @@
 import { createGame, rotateRemainingPathCard, toInsertState } from '../../src/common/game';
 import GameModel from '../database/gameModel';
 
+export const getIndex = (req, res) => res.status(200).json({ msg: 'Welcome to Labyrinth' });
+
 export const postCreateGame = (req, res) => {
     const game = createGame();
     let gameModel = new GameModel(game);
@@ -11,19 +13,16 @@ export const postCreateGame = (req, res) => {
         })
         .catch(err => {
             res.status(400).send('unable to save to database');
-            console.log(err);
         });
 };
 
 export const getGame = (req, res) => {
-    console.log('server getGame id=', req.params.id);
     GameModel.findById(req.params.id, function(err, gameDocument) {
         if (err) {
             res.status(400).send('unable to get the game');
-            console.log(err);
-        } else {
-            res.status(200).json(gameDocument);
+            return;
         }
+        res.status(200).json(gameDocument);
     });
 };
 
@@ -32,7 +31,6 @@ export const postRotateRemainingPathCard = (req, res) => {
     GameModel.findById(req_id, function(err, gameDocument) {
         if (err) {
             res.status(400).send('unable to get the game by id');
-            console.log(err);
             return;
         }
 
@@ -46,7 +44,6 @@ export const postRotateRemainingPathCard = (req, res) => {
             })
             .catch(err => {
                 res.status(400).send('unable to save to database');
-                console.log(err);
             });
     });
 };

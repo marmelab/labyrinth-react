@@ -1,7 +1,9 @@
 import express from 'express';
-import { postCreateGame, getGame, postRotateRemainingPathCard } from '../controllers/gameController';
+import { getIndex, postCreateGame, getGame, postRotateRemainingPathCard } from '../controllers/gameController';
 
 const router = express.Router();
+
+router.get('/', getIndex);
 
 router.post('/createGame', postCreateGame);
 

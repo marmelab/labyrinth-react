@@ -11,11 +11,9 @@ const NewGame = ({ onCreateGame }) => (
     </div>
 );
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onCreateGame: () => dispatch(createGame()),
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    onCreateGame: () => dispatch(createGame()),
+});
 
 export default connect(
     null,
