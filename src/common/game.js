@@ -27,11 +27,9 @@ export const createGame = () => {
     let { board, players, remainingPathCard } = initGame(NB_PLAYER, NB_TARGET_CARD);
     const currentIndexOfPathCardInsertionPosition = 0;
     const { x, y } = PATH_CARD_INSERTION_POSITION[currentIndexOfPathCardInsertionPosition];
-    const newBoard = produce(board, draft => {
-        putCardOnBoard(draft, x, y, remainingPathCard);
-    });
+
     const game = Object.freeze({
-        board: newBoard,
+        board: board,
         players: players,
         scores: Array.from({ length: players.length }, () => 0),
         remainingPathCard: movePathCardTo(remainingPathCard, x, y),
@@ -83,8 +81,8 @@ export const movePlayer = (game, direction, godMode = false) => {
     const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
 
     if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length) {
-        if (godMode || getExitDirections(board[x][y]).includes(direction)) {
-            const nextPathCard = board[nextX][nextY];
+        if (godMode || getExitDirections(board[y][x]).includes(direction)) {
+            const nextPathCard = board[nextY][nextX];
             const nextPathCardEntranceDirections = getExitDirections(nextPathCard).map(rotateDirection(2));
             if (godMode || nextPathCardEntranceDirections.includes(direction)) {
                 // the move is possible
@@ -126,9 +124,9 @@ const computeImmediateReachablePositionsFromXY = (board, x, y) =>
             nextX < board.length &&
             nextY >= 0 &&
             nextY < board.length &&
-            getExitDirections(board[x][y]).includes(direction)
+            getExitDirections(board[y][x]).includes(direction)
         ) {
-            const nextPathCard = board[nextX][nextY];
+            const nextPathCard = board[nextY][nextX];
             const nextPathCardEntranceDirections = getExitDirections(nextPathCard).map(rotateDirection(2));
             if (nextPathCardEntranceDirections.includes(direction)) {
                 res.push({ x: nextX, y: nextY });
@@ -262,7 +260,7 @@ const shiftRowRight = (game, y) => {
 
 const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
     produce(game, draft => {
-        draft.board[toX][toY] = movePathCardTo(game.board[fromX][fromY], toX, toY);
+        draft.board[toY][toX] = movePathCardTo(game.board[fromY][fromX], toX, toY);
         const { players } = game;
         draft.players = moveAllPlayers({
             players,
@@ -275,7 +273,7 @@ const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
 
 const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
     const { players } = game;
-    const extractedPathCard = game.board[fromX][fromY];
+    const extractedPathCard = game.board[fromY][fromX];
 
     const newGame = shiftFunction(game, fixed);
     const newGame2 = produce(newGame, draft => {
@@ -303,18 +301,13 @@ export const insertRemainingPathCard = game => {
 };
 
 export const insertRemainingPathCardAt = (game, x, y) => {
-    console.log('insertRemainingPathCardAt ', { x, y });
-
     if (!isInsertionPosition({ x, y })) {
-        console.log('not an isInsertionPosition: identity');
         return game;
     }
 
     const newGame = setRemainingPathCardAt(game, x, y);
 
     if (x < 0) {
-        console.log('case 1');
-
         return doShift({
             game: newGame,
             shiftFunction: shiftRowRight,
@@ -326,8 +319,6 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (x >= BOARD_SIZE) {
-        console.log('case 2');
-
         return doShift({
             game: newGame,
             shiftFunction: shiftRowLeft,
@@ -339,8 +330,6 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (y < 0) {
-        console.log('case 3');
-
         return doShift({
             game: newGame,
             shiftFunction: shiftColumnUp,
@@ -352,8 +341,6 @@ export const insertRemainingPathCardAt = (game, x, y) => {
         });
     }
     if (y >= BOARD_SIZE) {
-        console.log('case 4');
-
         return doShift({
             game: newGame,
             shiftFunction: shiftColumnDown,
@@ -364,8 +351,6 @@ export const insertRemainingPathCardAt = (game, x, y) => {
             fixed: x,
         });
     }
-
-    console.log('did nothing');
 
     return newGame;
 };

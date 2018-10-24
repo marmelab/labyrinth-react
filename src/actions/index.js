@@ -43,11 +43,8 @@ export const rotateRemainingPathcardClockwise = game => {
     };
 };
 
-const optimisticInsertRemainingPathcardAt = (dispatch, game, x, y) => {
-    const newGame = insertRemainingPathCardAt(game, x, y);
-    console.log('optimistic new game: ', newGame);
-    return Promise.resolve(dispatch(insertRemainingPathcardAtOptimistic(newGame)));
-};
+const optimisticInsertRemainingPathcardAt = (dispatch, game, x, y) =>
+    Promise.resolve(dispatch(insertRemainingPathcardAtOptimistic(insertRemainingPathCardAt(game, x, y))));
 
 const networkInsertRemainingPathcardAt = (dispatch, game, x, y) => {
     const config = {
@@ -58,7 +55,6 @@ const networkInsertRemainingPathcardAt = (dispatch, game, x, y) => {
     };
 
     return axios(config).then(response => {
-        console.log('network new game: ', response.data);
         dispatch(insertRemainingPathcardAtSuccess(response.data));
     });
 };

@@ -65,7 +65,6 @@ export const postInsertRemainingPathCardAt = (req, res) => {
             return;
         }
 
-        console.log('server postInsertRemainingPathCardAt', req_x, req_y);
         let newGame = insertRemainingPathCardAt(gameDocument.toObject(), req_x, req_y);
         newGame = toMoveState(newGame);
 
