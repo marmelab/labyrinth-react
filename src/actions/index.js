@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CREATE_GAME, CREATE_GAME_SUCCESS, ROTATE_REMAINING_PATHCARD_CLOCKWISE } from './types';
+import { CREATE_GAME_SUCCESS, ROTATE_REMAINING_PATHCARD_CLOCKWISE } from './types';
 
 const apiUrl = 'http://localhost:3000';
 
@@ -24,12 +24,12 @@ const createGameSuccess = data => ({
     },
 });
 
-export const rotateRemainingPathcardClockwise = () => {
+export const rotateRemainingPathcardClockwise = id => {
     return dispatch => {
         const config = {
             method: 'post',
             url: `${apiUrl}/rotateRemainingPathCard`,
-            data: { id: this.id },
+            data: { id: id },
             headers: { 'Content-Type': 'application/json' },
         };
 

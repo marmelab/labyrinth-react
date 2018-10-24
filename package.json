@@ -7,9 +7,9 @@
         "test:watch": "jest --watchAll",
         "coverage": "jest --collectCoverageFrom=server/**.js --coverage server",
         "lint": "eslint .",
-        "react-start": "react-scripts start",
+        "react-start": "NODE_ENV=developpement react-scripts start",
         "react-build": "react-scripts build",
-        "react-test": "react-scripts test"
+        "react-test": "react-scripts test "
     },
     "eslintConfig": {
         "extends": "react-app"

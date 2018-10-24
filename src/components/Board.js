@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tile from './Tile';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -31,7 +31,7 @@ const insert_positions = [
 
 const isInsertPosition = (x, y) => insert_positions.findIndex(position => position.x === x && position.y === y) > -1;
 
-const Board = ({ board, players }) =>
+export const Board = ({ board, players }) =>
     board ? (
         <div className="board">
             <div className="board-game" id="empty" />
@@ -56,7 +56,7 @@ const Board = ({ board, players }) =>
                                 return (
                                     <div className="box" key={`${columnIndex}-${rowIndex}`}>
                                         <div className="centered-content">
-                                            {image && <img className="player-image" src={image} />}
+                                            {image && <img alt={`Player`} className="player-image" src={image} />}
                                         </div>
                                     </div>
                                 );
