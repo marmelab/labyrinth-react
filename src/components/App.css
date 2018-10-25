@@ -79,10 +79,15 @@ body {
     width: 100%;
 }
 
-#insert-positions {
+#insert-or-move-layer {
     position: absolute;
     top: 23px;
     width: 100%;
+}
+
+.move-player {
+    border: solid 1px white;
+    background: rgba(0, 255, 0, 0.4);
 }
 
 .insert-position {

@@ -26,7 +26,7 @@ export const movePlayerTo = (player, toX, toY) =>
         draft.y = toY;
     });
 
-export const moveAllPlayers = ({ players, fromX, fromY, toX, toY }) =>
+export const moveAPlayerInPosition = ({ players, fromX, fromY, toX, toY }) =>
     players.map(player => (player.x === fromX && player.y === fromY ? movePlayerTo(player, toX, toY) : player));
 
 export const putPlayersBackOnBoard = game =>
@@ -42,4 +42,4 @@ export const getCurrentTargetCard = player =>
     player.targetCards.length ? player.targetCards[player.targetCards.length - 1] : null;
 
 export const isCurrentTargetReached = (player, board) =>
-    board[player.x][player.y].target === getCurrentTargetCard(player).target;
+    board[player.y][player.x].target === getCurrentTargetCard(player).target;

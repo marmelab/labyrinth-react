@@ -12,7 +12,7 @@ it('should render layers', () => {
     expect(wrapper.find('.board-game').find('#empty')).toHaveLength(1);
     expect(wrapper.find('.board-game').find('#ground')).toHaveLength(1);
     expect(wrapper.find('.board-game').find('#players')).toHaveLength(1);
-    expect(wrapper.find('.board-game').find('#insert-positions')).toHaveLength(1);
+    expect(wrapper.find('.board-game').find('#insert-or-move-layer')).toHaveLength(1);
 });
 
 it('should contain 7x7 tiles', () => {

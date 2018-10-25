@@ -35,9 +35,9 @@ export const movePathCardTo = (pathCard, toX, toY) =>
 export function getNextCoordinatesForAMove(x, y, direction) {
     switch (direction) {
         case Direction.NORTH:
-            return { x: x, y: y + 1 };
-        case Direction.SOUTH:
             return { x: x, y: y - 1 };
+        case Direction.SOUTH:
+            return { x: x, y: y + 1 };
         case Direction.EAST:
             return { x: x + 1, y: y };
         case Direction.WEST:

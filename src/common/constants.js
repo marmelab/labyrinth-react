@@ -5,14 +5,11 @@ export const STATE = Object.freeze({
 });
 
 export const EVENT = Object.freeze({
-    UP: 0,
-    DOWN: 1,
-    LEFT: 2,
-    RIGHT: 3,
-    VALIDATE: 4,
-    ROTATE: 5,
-    RESTART: 5,
-    QUIT: 5,
+    MOVE_PLAYER_TO: 0,
+    INSERT_REMAINING_PATHCARD_AT: 1,
+    ROTATE_REMAINING_PATHCARD: 2,
+    RESTART: 3,
+    QUIT: 4,
 });
 
 export const ROTATE = Object.freeze({
