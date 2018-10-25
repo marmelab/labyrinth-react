@@ -4,8 +4,6 @@ import PlayerAction from './PlayerAction';
 
 import { connect } from 'react-redux';
 import { insertRemainingPathcardAt, actionMoveCurrentPlayerTo } from '../actions';
-import { isGameInInsertState, isGameInMoveState, positionIsIn } from '../common/game';
-import PlayerCards from './PlayerCards';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -56,10 +54,16 @@ export const Board = ({ game, onInsertRemainingPathCardAt, onMoveCurrentPlayerTo
 
             <div className="board-game" id="insert-or-move-layer">
                 {game.board.map((row, rowIndex) => (
-                    <div className="row" key={`insert-positions ${rowIndex}`}>
+                    <div className="row" key={`insert-or-move-layer ${rowIndex}`}>
                         {row.map((_, columnIndex) => (
                             <div className="box" key={`${columnIndex}-${rowIndex}`}>
-                                <PlayerAction x={columnIndex} y={rowIndex} />
+                                <PlayerAction
+                                    x={columnIndex}
+                                    y={rowIndex}
+                                    game={game}
+                                    onInsertRemainingPathCardAt={onInsertRemainingPathCardAt}
+                                    onMoveCurrentPlayerTo={onMoveCurrentPlayerTo}
+                                />
                             </div>
                         ))}
                     </div>
