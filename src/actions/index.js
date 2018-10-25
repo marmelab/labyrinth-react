@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { rotateRemainingPathCard, insertRemainingPathCardAt } from '../common/game';
+import { rotateRemainingPathCard, insertRemainingPathCardAt, moveCurrentPlayerTo } from '../common/game';
 import { apiUrl } from '../config';
 import {
     CREATE_GAME_SUCCESS,
@@ -8,6 +8,8 @@ import {
     ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC,
     INSERT_REMAINING_PATHCARD,
     INSERT_REMAINING_PATHCARD_OPTIMISTIC,
+    MOVE_CURRENT_PLAYER_TO,
+    MOVE_CURRENT_PLAYER_TO_OPTIMISTIC,
 } from './types';
 
 export const createGame = () => {
@@ -70,6 +72,30 @@ export const insertRemainingPathcardAt = (game, x, y) => {
         Promise.all([
             optimisticInsertRemainingPathcardAt(dispatch, game, boardX, boardY),
             networkInsertRemainingPathcardAt(dispatch, game, boardX, boardY),
+        ]);
+    };
+};
+
+export const actionMoveCurrentPlayerTo = (game, x, y) => {
+    return dispatch => {
+        Promise.all([
+            Promise.resolve(
+                dispatch({
+                    type: MOVE_CURRENT_PLAYER_TO_OPTIMISTIC,
+                    payload: moveCurrentPlayerTo(game, x, y),
+                })
+            ),
+            axios({
+                method: 'post',
+                url: `${apiUrl}/moveCurrentPlayerTo`,
+                data: { id: game._id, x: x, y: y },
+                headers: { 'Content-Type': 'application/json' },
+            }).then(response => {
+                dispatch({
+                    type: MOVE_CURRENT_PLAYER_TO,
+                    payload: response.data,
+                });
+            }),
         ]);
     };
 };

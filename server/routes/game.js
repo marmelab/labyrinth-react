@@ -5,6 +5,7 @@ import {
     getGame,
     postRotateRemainingPathCard,
     postInsertRemainingPathCardAt,
+    postMoveCurrentPlayerTo,
 } from '../controllers/gameController';
 
 const router = express.Router();
@@ -18,5 +19,7 @@ router.get('/game/:id', getGame);
 router.post('/rotateRemainingPathCard', postRotateRemainingPathCard);
 
 router.post('/insertRemainingPathCardAt', postInsertRemainingPathCardAt);
+
+router.post('/moveCurrentPlayerTo', postMoveCurrentPlayerTo);
 
 export default router;

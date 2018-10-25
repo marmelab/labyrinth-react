@@ -41,22 +41,26 @@ export const createGame = () => {
     return computeReachablePositions(game);
 };
 
-export const toInsertState = game =>
+export const putGameInInsertState = game =>
     produce(game, draft => {
         draft.state = STATE.TO_INSERT;
     });
 
-export const toMoveState = game =>
+export const putGameInMoveState = game =>
     produce(game, draft => {
         draft.state = STATE.TO_MOVE;
     });
 
-export const toEndState = game =>
+export const putGameInEndState = game =>
     produce(game, draft => {
         draft.state = STATE.END;
     });
 
-const toNextPlayerTurn = game =>
+export const isGameInInsertState = game => game.state === STATE.TO_INSERT;
+export const isGameInMoveState = game => game.state === STATE.TO_MOVE;
+export const isGameInEndState = game => game.state === STATE.END;
+
+export const toNextPlayerTurn = game =>
     produce(game, draft => {
         draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
     });
@@ -95,7 +99,7 @@ export const movePlayer = (game, direction, godMode = false) => {
     return game;
 };
 
-const positionIsIn = ({ x, y }, positions) =>
+export const positionIsIn = ({ x, y }, positions) =>
     positions.findIndex(position => position.x === x && position.y === y) > -1;
 
 const computeAllReachablePositionsFromXY = (board, x, y) => {
@@ -146,7 +150,7 @@ const computeReachablePositions = game => {
     return newGame;
 };
 
-const moveCurrentPlayerTo = (game, x, y) => {
+export const moveCurrentPlayerTo = (game, x, y) => {
     const { players, currentPlayerIndex } = game;
     const player = players[currentPlayerIndex];
     const newGame = produce(game, draft => {

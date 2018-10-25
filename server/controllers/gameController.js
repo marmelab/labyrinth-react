@@ -2,8 +2,10 @@ import {
     createGame,
     insertRemainingPathCardAt,
     rotateRemainingPathCard,
-    toInsertState,
-    toMoveState,
+    putGameInInsertState,
+    putGameInMoveState,
+    moveCurrentPlayerTo,
+    toNextPlayerTurn,
 } from '../../src/common/game';
 import GameModel from '../database/gameModel';
 
@@ -41,7 +43,7 @@ export const postRotateRemainingPathCard = (req, res) => {
         }
 
         let newGame = rotateRemainingPathCard(gameDocument.toObject(), 1);
-        newGame = toInsertState(newGame);
+        newGame = putGameInInsertState(newGame);
         gameDocument.set(newGame);
         gameDocument
             .save()
@@ -66,7 +68,34 @@ export const postInsertRemainingPathCardAt = (req, res) => {
         }
 
         let newGame = insertRemainingPathCardAt(gameDocument.toObject(), req_x, req_y);
-        newGame = toMoveState(newGame);
+        newGame = putGameInMoveState(newGame);
+
+        gameDocument.set(newGame);
+        gameDocument
+            .save()
+            .then(game => {
+                res.status(200).json(game);
+            })
+            .catch(err => {
+                res.status(400).send('unable to save to database');
+            });
+    });
+};
+
+export const postMoveCurrentPlayerTo = (req, res) => {
+    const req_id = req.body.id;
+    const req_x = req.body.x;
+    const req_y = req.body.y;
+
+    GameModel.findById(req_id, function(err, gameDocument) {
+        if (err) {
+            res.status(400).send('unable to get the game by id');
+            return;
+        }
+
+        let newGame = moveCurrentPlayerTo(gameDocument.toObject(), req_x, req_y);
+        newGame = putGameInInsertState(newGame);
+        newGame = toNextPlayerTurn(newGame);
 
         gameDocument.set(newGame);
         gameDocument

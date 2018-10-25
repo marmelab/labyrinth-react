@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Tile from './Tile';
 import { connect } from 'react-redux';
-import { insertRemainingPathcardAt } from '../actions';
+import { insertRemainingPathcardAt, actionMoveCurrentPlayerTo } from '../actions';
+import { isGameInInsertState, isGameInMoveState, positionIsIn } from '../common/game';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -32,7 +33,7 @@ const insert_positions = [
 
 const isInsertPosition = (x, y) => insert_positions.findIndex(position => position.x === x && position.y === y) > -1;
 
-export const Board = ({ game, onInsertRemainingPathCardAt }) =>
+export const Board = ({ game, onInsertRemainingPathCardAt, onMoveCurrentPlayerTo }) =>
     game.board ? (
         <div className="board">
             <div className="board-game" id="empty" />
@@ -67,22 +68,46 @@ export const Board = ({ game, onInsertRemainingPathCardAt }) =>
                 </div>
             )}
 
-            <div className="board-game" id="insert-positions">
-                {game.board.map((row, rowIndex) => (
-                    <div className="row" key={`insert-positions ${rowIndex}`}>
-                        {row.map((_, columnIndex) => (
-                            <div className="box" key={`${columnIndex}-${rowIndex}`}>
-                                {isInsertPosition(columnIndex, rowIndex) && (
-                                    <div
-                                        className="centered-content insert-position"
-                                        onClick={() => onInsertRemainingPathCardAt(game, columnIndex, rowIndex)}
-                                    />
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
+            {isGameInInsertState(game) && (
+                <div className="board-game" id="insert-positions">
+                    {game.board.map((row, rowIndex) => (
+                        <div className="row" key={`insert-positions ${rowIndex}`}>
+                            {row.map((_, columnIndex) => (
+                                <div className="box" key={`${columnIndex}-${rowIndex}`}>
+                                    {isInsertPosition(columnIndex, rowIndex) && (
+                                        <div
+                                            className="centered-content insert-position"
+                                            onClick={() => onInsertRemainingPathCardAt(game, columnIndex, rowIndex)}
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {isGameInMoveState(game) && (
+                <div className="board-game" id="move-player">
+                    {game.board.map((row, rowIndex) => (
+                        <div className="row" key={`move-player ${rowIndex}`}>
+                            {row.map((_, columnIndex) => (
+                                <div className="box" key={`${columnIndex}-${rowIndex}`}>
+                                    {positionIsIn(
+                                        { x: columnIndex, y: rowIndex },
+                                        game.reachablePositions[game.currentPlayerIndex]
+                                    ) && (
+                                        <div
+                                            className="centered-content move-player"
+                                            onClick={() => onMoveCurrentPlayerTo(game, columnIndex, rowIndex)}
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     ) : (
         <div className="board" id="start-new-game">
@@ -100,6 +125,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onInsertRemainingPathCardAt: (game, x, y) => {
             dispatch(insertRemainingPathcardAt(game, x, y));
+        },
+        onMoveCurrentPlayerTo: (game, x, y) => {
+            dispatch(actionMoveCurrentPlayerTo(game, x, y));
         },
     };
 };
