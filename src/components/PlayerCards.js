@@ -6,12 +6,17 @@ import Tile from './Tile';
 import { isGameInInsertState, isGameInMoveState } from '../../src/common/game';
 import { getCurrentTargetCard, getNumberOfRemainingTargetCard } from '../common/player';
 import { treasures } from './assets';
+import Player from './Player';
 
 const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
     game.remainingPathCard ? (
         <div className="board">
             <div className="row">
-                <div className="box" />
+                <div className="box">
+                    <div className="game-invite-current-player">
+                        <Player playerIndex={game.currentPlayerIndex} />
+                    </div>
+                </div>
                 <div className="box" />
                 <div className="box" />
                 <div className="box">
@@ -28,15 +33,16 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
             </div>
 
             <div className="game-state">
-                Player #{game.players[game.currentPlayerIndex].color},
-                {isGameInInsertState(game) && 'please Insert the remaining path card'}
-                {isGameInMoveState(game) && 'please Move your pawn'}
+                {isGameInInsertState(game) && 'Please Insert the remaining path card'}
+                {isGameInMoveState(game) && 'Please Move your pawn'}
             </div>
 
             <div className="player-score">Your score is: {game.scores[game.currentPlayerIndex]}</div>
+
             <div className="current-target">
                 Current target: {treasures[getCurrentTargetCard(game.players[game.currentPlayerIndex]).target]}
             </div>
+
             <div className="remaining-targets">
                 Number of remaining target cards:{' '}
                 {getNumberOfRemainingTargetCard(game.players[game.currentPlayerIndex])}
