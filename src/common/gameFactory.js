@@ -162,8 +162,8 @@ export const shuffle = array =>
 
 export const initPlayers = (board, nbPlayers) => {
     const STARTING_POSITION_FOR_PLAYER = [
-        { x: 0, y: 0, color: 'yellow' },
-        { x: 6, y: 6, color: 'green' },
+        { x: 0, y: 0, color: 'blue' },
+        { x: 6, y: 6, color: 'yellow' },
         { x: 6, y: 0, color: 'blue' },
         { x: 0, y: 6, color: 'red' },
     ];

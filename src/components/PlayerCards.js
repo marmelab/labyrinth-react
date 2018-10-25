@@ -1,10 +1,11 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import { rotateRemainingPathcardClockwise } from '../actions/index';
-
 import Tile from './Tile';
+import { isGameInInsertState, isGameInMoveState } from '../../src/common/game';
+import { getCurrentTargetCard, getNumberOfRemainingTargetCard } from '../common/player';
+import { treasures } from './assets';
 
 const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
     game.remainingPathCard ? (
@@ -24,6 +25,21 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
                 <div className="box" />
                 <div className="box" />
                 <div className="box" />
+            </div>
+
+            <div className="game-state">
+                Player #{game.players[game.currentPlayerIndex].color},
+                {isGameInInsertState(game) && 'please Insert the remaining path card'}
+                {isGameInMoveState(game) && 'please Move your pawn'}
+            </div>
+
+            <div className="player-score">Your score is: {game.scores[game.currentPlayerIndex]}</div>
+            <div className="current-target">
+                Current target: {treasures[getCurrentTargetCard(game.players[game.currentPlayerIndex]).target]}
+            </div>
+            <div className="remaining-targets">
+                Number of remaining target cards:{' '}
+                {getNumberOfRemainingTargetCard(game.players[game.currentPlayerIndex])}
             </div>
         </div>
     ) : (
