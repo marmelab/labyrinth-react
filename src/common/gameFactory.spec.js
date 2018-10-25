@@ -4,8 +4,8 @@ import { initGame, initPlayers, dealCards, buildBoard, buildPathDeck, buildTarge
 describe('Board', () => {
     const { board, targetNumber } = buildBoard();
     it('should contain NxN cells (PathCard or 0)', () => {
-        board.forEach(column =>
-            column.forEach(cell => {
+        board.forEach(row =>
+            row.forEach(cell => {
                 expect(cell || cell === 0).toBeTruthy();
             })
         );
@@ -23,8 +23,8 @@ describe('Board', () => {
     });
 
     it('should only contain target paths which are either a CORNER or a CROSS', () => {
-        board.forEach((column, x) => {
-            column.forEach((card, y) => {
+        board.forEach((row, y) => {
+            row.forEach((card, x) => {
                 if (x % 2 === 0 && y % 2 === 0) {
                     expect(card).not.toBeNull();
                     expect(card.type === Type.CORNER || card.type === Type.CROSS).toBeTruthy();
