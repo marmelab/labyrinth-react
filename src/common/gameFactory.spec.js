@@ -27,7 +27,7 @@ describe('Board', () => {
             column.forEach((card, y) => {
                 if (x % 2 === 0 && y % 2 === 0) {
                     expect(card).not.toBeNull();
-                    expect(card.type == Type.CORNER || card.type == Type.CROSS).toBeTruthy();
+                    expect(card.type === Type.CORNER || card.type === Type.CROSS).toBeTruthy();
                     expect(card.x).toBe(x);
                     expect(card.y).toBe(y);
                 } else {
@@ -49,19 +49,19 @@ describe('PathDeck', () => {
     });
 
     it('should contain 13 no-target straigth path cards', () => {
-        expect(deck.filter(c => c.type == Type.STRAIGHT && c.target == null)).toHaveLength(13);
+        expect(deck.filter(c => c.type === Type.STRAIGHT && c.target === null)).toHaveLength(13);
     });
 
     it('should contain 9 no-target CORNER path cards', () => {
-        expect(deck.filter(c => c.type == Type.CORNER && c.target == null)).toHaveLength(9);
+        expect(deck.filter(c => c.type === Type.CORNER && c.target === null)).toHaveLength(9);
     });
 
     it('should contain 6 target CORNER path cards', () => {
-        expect(deck.filter(c => c.type == Type.CORNER && c.target !== null)).toHaveLength(6);
+        expect(deck.filter(c => c.type === Type.CORNER && c.target !== null)).toHaveLength(6);
     });
 
     it('should contain 6 target CROSS path cards', () => {
-        expect(deck.filter(c => c.type == Type.CROSS && c.target !== null)).toHaveLength(6);
+        expect(deck.filter(c => c.type === Type.CROSS && c.target !== null)).toHaveLength(6);
     });
 
     it("should return a deck where cards aren't in their original position", () => {

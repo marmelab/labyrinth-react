@@ -5,7 +5,7 @@ services:
         image: node:10-alpine
         user: '${UID}:${GID}'
         volumes:
-            - .:/app:delegated
+            - .:/app
         command: 'npm run react-start'
         environment:
             - HOME=/app/var/cache

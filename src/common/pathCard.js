@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import { produce } from 'immer';
 
 export const Type = Object.freeze({ STRAIGHT: '┃', CORNER: '┗', CROSS: '┻' }); // pointing NORTH

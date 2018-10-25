@@ -1,8 +1,16 @@
-const express = require('express');
-const app = express();
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-app.get('/', function(req, res) {
-    res.send('Welcome to Labyrinth application!');
-});
+import { initDB } from './database/init';
+import gameRouter from './routes/game';
+
+initDB();
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+
+app.use('/', gameRouter);
 
 module.exports = app;

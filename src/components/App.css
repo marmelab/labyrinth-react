@@ -3,11 +3,11 @@ body {
     font-size: 18px;
 }
 
-.App-header {
+.app-header {
     background-color: #8ca0ff;
 }
 
-.App {
+.app {
     margin: 0 auto;
     max-width: 700px;
 }
@@ -15,6 +15,12 @@ body {
 .board {
     max-width: 60vh;
     margin: 0 auto;
+}
+
+#start-new-game {
+    width: 100%;
+    height:400px;
+    background-color: tomato;
 }
 
 .board-game {
@@ -51,6 +57,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 
 #empty {
     position: relative;
