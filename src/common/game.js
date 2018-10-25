@@ -86,7 +86,9 @@ export const putGameInEndState = game =>
     });
 
 export const isGameInInsertState = game => game.state === STATE.TO_INSERT;
+
 export const isGameInMoveState = game => game.state === STATE.TO_MOVE;
+
 export const isGameInEndState = game => game.state === STATE.END;
 
 export const toNextPlayerTurn = game =>
@@ -105,27 +107,6 @@ const increasePlayerScoreIfOnTarget = game => {
         draft.players[currentPlayerIndex] = newPlayer;
         draft.scores[currentPlayerIndex] = newScore;
     });
-};
-
-export const movePlayer = (game, direction, godMode = false) => {
-    const { board, players, currentPlayerIndex } = game;
-    const player = players[currentPlayerIndex];
-    const { x, y } = player;
-    const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
-
-    if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length) {
-        if (godMode || getExitDirections(board[y][x]).includes(direction)) {
-            const nextPathCard = board[nextY][nextX];
-            const nextPathCardEntranceDirections = getExitDirections(nextPathCard).map(rotateDirection(2));
-            if (godMode || nextPathCardEntranceDirections.includes(direction)) {
-                // the move is possible
-                return produce(game, draft => {
-                    draft.players[currentPlayerIndex] = movePlayerTo(player, nextX, nextY);
-                });
-            }
-        }
-    }
-    return game;
 };
 
 export const positionIsIn = ({ x, y }, positions) =>
@@ -188,20 +169,6 @@ export const moveCurrentPlayerTo = (game, x, y) => {
     return newGame;
 };
 
-const moveRemainingPathCard = (game, direction) => {
-    const { remainingPathCard, currentIndexOfPathCardInsertionPosition } = game;
-    const numberOfPosition = PATH_CARD_INSERTION_POSITION.length;
-    const toAdd = direction === Direction.WEST ? 1 : -1;
-    const newIndex = (numberOfPosition + currentIndexOfPathCardInsertionPosition + toAdd) % numberOfPosition;
-    const { x: newX, y: newY } = PATH_CARD_INSERTION_POSITION[newIndex];
-    const newRemainingCard = movePathCardTo(remainingPathCard, newX, newY);
-
-    return produce(game, draft => {
-        draft.currentIndexOfPathCardInsertionPosition = newIndex;
-        draft.remainingPathCard = newRemainingCard;
-    });
-};
-
 export const setRemainingPathCardAt = (game, x, y) => {
     const index = getIndexPosition({ x, y });
     const newRemainingCard = movePathCardTo(game.remainingPathCard, x, y);
@@ -210,10 +177,6 @@ export const setRemainingPathCardAt = (game, x, y) => {
         draft.remainingPathCard = newRemainingCard;
     });
 };
-
-const moveRemainingPathCardClockwise = game => moveRemainingPathCard(game, Direction.EAST);
-
-const moveRemainingPathCardAntiClockwise = game => moveRemainingPathCard(game, Direction.WEST);
 
 export const rotateRemainingPathCard = (game, deltaDirection = ROTATE.CLOCKWISE) => {
     const { remainingPathCard } = game;
@@ -304,11 +267,14 @@ const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
 
 const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
     const { players } = game;
-    const extractedPathCard = game.board[fromY][fromX];
 
-    const newGame = shiftFunction(game, fixed);
-    const newGame2 = produce(newGame, draft => {
-        draft.remainingPathCard = movePathCardTo(extractedPathCard, toX, toY);
+    const extractedPathCard = movePathCardTo(game.board[fromY][fromX], toX, toY);
+    const currentIndexOfPathCardInsertionPosition = getIndexPosition({
+        x: toX,
+        y: toY,
+    });
+
+    const newGame1 = produce(game, draft => {
         draft.players = moveAllPlayers({
             players,
             fromX,
@@ -316,12 +282,16 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
             toX,
             toY,
         });
-        draft.currentIndexOfPathCardInsertionPosition = getIndexPosition({
-            x: toX,
-            y: toY,
-        });
     });
-    return putPlayersBackOnBoard(newGame2);
+
+    const newGame2 = shiftFunction(newGame1, fixed);
+
+    const newGame3 = produce(newGame2, draft => {
+        draft.remainingPathCard = movePathCardTo(extractedPathCard, toX, toY);
+        draft.currentIndexOfPathCardInsertionPosition = currentIndexOfPathCardInsertionPosition;
+    });
+
+    return putPlayersBackOnBoard(newGame3);
 };
 
 export const insertRemainingPathCardAt = (game, x, y) => {
