@@ -59,9 +59,10 @@ const networkInsertRemainingPathcardAt = (dispatch, game, x, y) => {
     });
 };
 
-const convertDisplayToBoard = x => (x === 0 ? -1 : x === 6 ? 7 : x);
-
 export const insertRemainingPathcardAt = (game, x, y) => {
+    // display positions range from 0 to 6 (7 rows and columns)
+    // whereas board positions range from -1 to 7 (1 extra row and column for inserting the remaining path card)
+    const convertDisplayToBoard = x => (x === 0 ? -1 : x === 6 ? 7 : x);
     const boardX = convertDisplayToBoard(x);
     const boardY = convertDisplayToBoard(y);
 
