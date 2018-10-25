@@ -96,6 +96,10 @@ body {
     background: rgba(255, 255, 255, 0.4);
 }
 
+.remaining-tile-image {
+    transition: transform 1s;
+}
+
 @keyframes tile-blink {
     0% {
     }

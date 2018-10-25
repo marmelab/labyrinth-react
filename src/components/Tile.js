@@ -9,11 +9,11 @@ const typeToMatrix = {
     [Type.STRAIGHT]: 'images/straight96.png',
 };
 
-const Tile = ({ degrees, type, target, onClick }) => (
+const Tile = ({ degrees, type, target, isRemainingTile, onClick }) => (
     <div onClick={onClick}>
         <div className="centered-content">
             <img
-                className="tile-image"
+                className={isRemainingTile ? 'remaining-tile-image' : 'tile-image'}
                 alt={`Tile ${type}`}
                 style={{ transform: `rotate(${degrees}deg)` }}
                 src={typeToMatrix[type]}

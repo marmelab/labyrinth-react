@@ -25,6 +25,7 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
                         type={game.remainingPathCard.type}
                         target={game.remainingPathCard.target}
                         onClick={() => onRotateRemainingPathCard(game)}
+                        isRemainingTile
                     />
                 </div>
                 <div className="box" />
