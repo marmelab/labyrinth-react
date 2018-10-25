@@ -4,13 +4,7 @@ import { getCurrentTargetCard } from './player';
 
 import { PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard } from './board';
 
-import {
-    movePlayer,
-    createGame,
-    insertRemainingPathCard,
-    insertRemainingPathCardAt,
-    setRemainingPathCardAt,
-} from './game';
+import { movePlayer, createGame, insertRemainingPathCardAt, setRemainingPathCardAt } from './game';
 
 describe('Game movePlayer', () => {
     const game = createGame();
@@ -34,27 +28,6 @@ describe('Game movePlayer', () => {
 
     it('should not be on the target', () => {
         expect(playerX === targetX && playerY === targetY).toBeFalsy();
-    });
-
-    it.skip('should increase score when target is reached', () => {
-        // TODO: add tests
-        let { x, y } = { x: playerX, y: playerY };
-        const godMode = true;
-        let newScore = score;
-        if (searchTargetCardInBoard(board, targetCard)) {
-            let currentGame = game;
-            if (x === targetX && y === targetY) {
-                expect(newScore).toBe(score + 1);
-            } else if (x < targetX) {
-                currentGame = movePlayer(currentGame, Direction.EAST, godMode);
-            } else if (x > targetX) {
-                currentGame = movePlayer(currentGame, Direction.WEST, godMode);
-            } else if (y < targetY) {
-                currentGame = movePlayer(currentGame, Direction.NORTH, godMode);
-            } else if (y > targetY) {
-                currentGame = movePlayer(currentGame, Direction.SOUTH, godMode);
-            }
-        }
     });
 });
 
@@ -80,10 +53,10 @@ describe('put remainingPathCard on the board', () => {
     });
 });
 
-describe('insert a pathCard into Board', () => {
+describe('insert a pathCard at 1,-1', () => {
     const game = createGame();
     const { board: oldBoard, remainingPathCard } = game;
-    const { board: newBoard, remainingPathCard: newRemainingPathCard } = insertRemainingPathCard(game);
+    const { board: newBoard, remainingPathCard: newRemainingPathCard } = insertRemainingPathCardAt(game, 1, -1);
 
     it('should be in 1, -1', () => {
         expect(remainingPathCard.x).toBe(1);
@@ -105,7 +78,7 @@ describe('insert a pathCard into Board', () => {
         expect(newBoard[0][1].direction).toBe(remainingPathCard.direction);
     });
 
-    it('should have extracted board[1][6]', () => {
+    it('should have extracted board[6][1]', () => {
         expect(oldBoard[6][1].type).toBe(newRemainingPathCard.type);
         expect(oldBoard[6][1].direction).toBe(newRemainingPathCard.direction);
     });
@@ -113,8 +86,8 @@ describe('insert a pathCard into Board', () => {
 
 describe('insert a pathCard up and down', () => {
     const game = createGame();
-    const game1 = insertRemainingPathCard(game);
-    const game2 = insertRemainingPathCard(game1);
+    const game1 = insertRemainingPathCardAt(game, 1, -1);
+    const game2 = insertRemainingPathCardAt(game1, 1, 7);
 
     it('should be in 1, 7', () => {
         expect(game1.remainingPathCard.x).toBe(1);
@@ -140,21 +113,6 @@ describe('insert a pathCard up and down', () => {
 
     it('should do the identity', () => {
         expect(JSON.stringify(game)).toEqual(JSON.stringify(game2));
-    });
-});
-
-describe('insert a pathCard into all possible positions', () => {
-    const game = createGame();
-    PATH_CARD_INSERTION_POSITION.forEach(position => {
-        const { x, y } = position;
-        const newGame = setRemainingPathCardAt(game, x, y);
-
-        const game1 = insertRemainingPathCard(newGame);
-        const game2 = insertRemainingPathCard(game1);
-        it('should do the identity', () => {
-            expect(newGame.remainingPathCard).toEqual(game2.remainingPathCard);
-            expect(JSON.stringify(newGame)).toEqual(JSON.stringify(game2));
-        });
     });
 });
 
