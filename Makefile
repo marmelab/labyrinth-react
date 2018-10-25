@@ -1,20 +1,25 @@
 MAKEFLAGS += --silent
 
-DOCKER_COMPOSE = docker-compose -p labyrinth-react -f docker-compose.yaml
+DOCKER_COMPOSE = docker-compose -p labyrinth-react -f docker-compose.yaml -f docker-compose.prod.yaml
 DOCKER_COMPOSE_DEV = docker-compose -p labyrinth-react -f docker-compose.yaml -f docker-compose.dev.yaml
 
 export $UID = $(id -u)
 export $GID = $(id -g)
 
 DIST_SERVER = dist/server
+DIST_SRC = dist/src
 DIST_CLIENT = dist/client
 FILES_SERVER := $(shell find ./server ! -path "*.spec.js" -type f)
+FILES_SRC := $(shell find ./src/common ! -path "*.spec.js" -type f)
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install:
 	$(DOCKER_COMPOSE_DEV) run --no-deps --rm api ash -ci 'npm install'
+
+install-prod:
+	$(DOCKER_COMPOSE) run --no-deps --rm api ash -ci 'npm install'
 
 run: start
 start: ## Start the server
@@ -62,17 +67,18 @@ build-front:
 	rm -rf build
 
 build-server:
-	rm -rf $(DIST_SERVER)
-	mkdir -p $(DIST_SERVER)
-	cp $(FILES_SERVER) $(DIST_SERVER)
+	rm -rf $(DIST_SERVER) $(DIST_SRC)
+	mkdir -p $(DIST_SERVER) $(DIST_SRC)
+	./node_modules/.bin/babel -d dist $(FILES_SERVER)
+	./node_modules/.bin/babel -d dist $(FILES_SRC)
 
 deploy-front: build-front
 	aws s3 rm s3://labyrinth-react --recursive
 	aws s3 sync $(DIST_CLIENT) s3://labyrinth-react/
 
 deploy-server: build-server
-	scp -r Makefile package.json docker-compose.yaml $(DIST_SERVER) labyrinth-react:app/
-	ssh labyrinth-react 'cd app && make stop-prod start-prod'
+	scp -r Makefile package.json docker-compose.yaml docker-compose.prod.yaml $(DIST_SERVER) $(DIST_SRC) labyrinth-react:app/
+	ssh labyrinth-react 'cd app && make stop-prod install-prod start-prod'
 
 deploy-all: deploy-front deploy-server
 

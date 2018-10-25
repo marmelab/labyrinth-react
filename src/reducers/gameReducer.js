@@ -1,10 +1,15 @@
-import { CREATE_GAME_SUCCESS } from '../actions/types';
+import {
+    CREATE_GAME_SUCCESS,
+    ROTATE_REMAINING_PATHCARD_CLOCKWISE,
+    ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC,
+} from '../actions/types';
 
 export default function gameReducer(state = [], action) {
     switch (action.type) {
         case CREATE_GAME_SUCCESS:
-            return action.payload.game;
-
+        case ROTATE_REMAINING_PATHCARD_CLOCKWISE:
+        case ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC:
+            return action.payload;
         default:
             return state;
     }

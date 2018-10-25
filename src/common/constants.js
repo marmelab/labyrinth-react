@@ -14,3 +14,8 @@ export const EVENT = Object.freeze({
     RESTART: 5,
     QUIT: 5,
 });
+
+export const ROTATE = Object.freeze({
+    CLOCKWISE: 1,
+    ANTI_CLOCKWISE: -1,
+});

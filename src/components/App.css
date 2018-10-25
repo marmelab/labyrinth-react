@@ -19,7 +19,7 @@ body {
 
 #start-new-game {
     width: 100%;
-    height:400px;
+    height: 400px;
     background-color: tomato;
 }
 
@@ -31,15 +31,18 @@ body {
     max-height: 60vh;
     font-size: 1rem;
 }
+
 .row {
     display: flex;
 }
+
 .box {
     margin: 1px;
     font-weight: bold;
     flex: 1 0 auto;
     position: relative;
 }
+
 .box:after {
     content: '';
     float: left;
@@ -57,7 +60,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 
 #empty {
     position: relative;

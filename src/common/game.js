@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-import { STATE } from './constants';
+import { STATE, ROTATE } from './constants';
 import { initGame } from './gameFactory';
 import { getExitDirections, Direction, rotateDirection, movePathCardTo, getNextCoordinatesForAMove } from './pathCard';
 
@@ -184,8 +184,7 @@ const moveRemainingPathCardClockwise = game => moveRemainingPathCard(game, Direc
 
 const moveRemainingPathCardAntiClockwise = game => moveRemainingPathCard(game, Direction.WEST);
 
-// deltaDirection=1 for clokwise, -1 for anti-clockwise
-export const rotateRemainingPathCard = (game, deltaDirection = 1) => {
+export const rotateRemainingPathCard = (game, deltaDirection = ROTATE.CLOCKWISE) => {
     const { remainingPathCard } = game;
     const newRemainingPathCard = produce(remainingPathCard, draft => {
         draft.direction = (remainingPathCard.direction + deltaDirection) % 4;
