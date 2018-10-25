@@ -33,9 +33,8 @@ export const postCreateGame = (req, res) => {
     saveGameDocumentAndRespond(res, gameDocument);
 };
 
-const genericPostAction = (req, res, event, args) => {
-    const req_id = req.body.id;
-    GameModel.findById(req_id, function(err, gameDocument) {
+const genericPostAction = (gameId, res, event, args = {}) => {
+    GameModel.findById(gameId, function(err, gameDocument) {
         if (err) {
             res.status(400).send('unable to get the game by id');
             return;
@@ -48,13 +47,18 @@ const genericPostAction = (req, res, event, args) => {
 };
 
 export const postRotateRemainingPathCard = (req, res) => {
-    genericPostAction(req, res, EVENT.ROTATE_REMAINING_PATHCARD, {});
+    const gameId = req.params && req.params.id ? req.params.id : req.body.id;
+    genericPostAction(gameId, res, EVENT.ROTATE_REMAINING_PATHCARD);
 };
 
 export const postInsertRemainingPathCardAt = (req, res) => {
-    genericPostAction(req, res, EVENT.INSERT_REMAINING_PATHCARD_AT, { x: req.body.x, y: req.body.y });
+    const gameId = req.params && req.params.id ? req.params.id : req.body.id;
+    const { x, y } = req.body;
+    genericPostAction(gameId, res, EVENT.INSERT_REMAINING_PATHCARD_AT, { x, y });
 };
 
 export const postMoveCurrentPlayerTo = (req, res) => {
-    genericPostAction(req, res, EVENT.MOVE_PLAYER_TO, { x: req.body.x, y: req.body.y });
+    const gameId = req.params && req.params.id ? req.params.id : req.body.id;
+    const { x, y } = req.body;
+    genericPostAction(gameId, res, EVENT.MOVE_PLAYER_TO, { x, y });
 };

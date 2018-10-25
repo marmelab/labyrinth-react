@@ -79,13 +79,7 @@ body {
     width: 100%;
 }
 
-#insert-positions {
-    position: absolute;
-    top: 23px;
-    width: 100%;
-}
-
-#move-player {
+#insert-or-move-layer {
     position: absolute;
     top: 23px;
     width: 100%;

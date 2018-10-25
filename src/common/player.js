@@ -26,7 +26,7 @@ export const movePlayerTo = (player, toX, toY) =>
         draft.y = toY;
     });
 
-export const moveAllPlayers = ({ players, fromX, fromY, toX, toY }) =>
+export const moveAPlayerInPosition = ({ players, fromX, fromY, toX, toY }) =>
     players.map(player => (player.x === fromX && player.y === fromY ? movePlayerTo(player, toX, toY) : player));
 
 export const putPlayersBackOnBoard = game =>

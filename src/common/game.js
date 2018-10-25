@@ -16,7 +16,7 @@ import {
     isCurrentTargetReached,
     removeTargetCardToPlay,
     movePlayerTo,
-    moveAllPlayers,
+    moveAPlayerInPosition,
     putPlayersBackOnBoard,
 } from './player';
 
@@ -52,22 +52,25 @@ export const handleEvent = (event, context) => {
             newGame = computeReachablePositionsForAllPlayers(newGame);
             newGame = toNextPlayerTurn(newGame);
             newGame = putGameInInsertState(newGame);
+            return newGame;
         }
-    } else if (isGameInInsertState(game)) {
+    }
+
+    if (isGameInInsertState(game)) {
         if (event === EVENT.INSERT_REMAINING_PATHCARD_AT) {
             newGame = insertRemainingPathCardAt(game, x, y);
             newGame = increasePlayerScoreIfOnTarget(newGame);
             newGame = computeReachablePositionsForAllPlayers(newGame);
             newGame = putGameInMoveState(newGame);
+            return newGame;
         } else if (event === EVENT.ROTATE_REMAINING_PATHCARD) {
             newGame = rotateRemainingPathCard(game);
             newGame = computeReachablePositionsForAllPlayers(newGame);
+            return newGame;
         }
-    } else if (isGameInEndState(game)) {
-        // game over
     }
 
-    return newGame;
+    return game;
 };
 
 export const putGameInInsertState = game =>
@@ -256,7 +259,7 @@ const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
     produce(game, draft => {
         draft.board[toY][toX] = movePathCardTo(game.board[fromY][fromX], toX, toY);
         const { players } = game;
-        draft.players = moveAllPlayers({
+        draft.players = moveAPlayerInPosition({
             players,
             fromX,
             fromY,
@@ -274,8 +277,8 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
         y: toY,
     });
 
-    const newGame1 = produce(game, draft => {
-        draft.players = moveAllPlayers({
+    const newGameWithMovesPlayers = produce(game, draft => {
+        draft.players = moveAPlayerInPosition({
             players,
             fromX,
             fromY,
@@ -284,14 +287,14 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
         });
     });
 
-    const newGame2 = shiftFunction(newGame1, fixed);
+    const newGameWithShiftedRowOrcolumn = shiftFunction(newGameWithMovesPlayers, fixed);
 
-    const newGame3 = produce(newGame2, draft => {
+    const newGameWithNewRemainingPathCard = produce(newGameWithShiftedRowOrcolumn, draft => {
         draft.remainingPathCard = movePathCardTo(extractedPathCard, toX, toY);
         draft.currentIndexOfPathCardInsertionPosition = currentIndexOfPathCardInsertionPosition;
     });
 
-    return putPlayersBackOnBoard(newGame3);
+    return putPlayersBackOnBoard(newGameWithNewRemainingPathCard);
 };
 
 export const insertRemainingPathCardAt = (game, x, y) => {
