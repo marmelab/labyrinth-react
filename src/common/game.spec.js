@@ -66,10 +66,6 @@ describe('create a game', () => {
         expect(remainingPathCard.x).toBe(1);
         expect(remainingPathCard.y).toBe(-1);
     });
-
-    it('should be the board', () => {
-        expect(board[1][-1]).toEqual(remainingPathCard);
-    });
 });
 
 describe('put remainingPathCard on the board', () => {
@@ -100,18 +96,18 @@ describe('insert a pathCard into Board', () => {
     });
 
     it('should have insert the right remainingCard', () => {
-        expect(newBoard[1][0].x).toBe(1);
-        expect(newBoard[1][0].y).toBe(0);
+        expect(newBoard[0][1].x).toBe(1);
+        expect(newBoard[0][1].y).toBe(0);
     });
 
     it('should have inserted remaining card', () => {
-        expect(newBoard[1][0].type).toBe(remainingPathCard.type);
-        expect(newBoard[1][0].direction).toBe(remainingPathCard.direction);
+        expect(newBoard[0][1].type).toBe(remainingPathCard.type);
+        expect(newBoard[0][1].direction).toBe(remainingPathCard.direction);
     });
 
     it('should have extracted board[1][6]', () => {
-        expect(oldBoard[1][6].type).toBe(newRemainingPathCard.type);
-        expect(oldBoard[1][6].direction).toBe(newRemainingPathCard.direction);
+        expect(oldBoard[6][1].type).toBe(newRemainingPathCard.type);
+        expect(oldBoard[6][1].direction).toBe(newRemainingPathCard.direction);
     });
 });
 

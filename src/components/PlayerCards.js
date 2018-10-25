@@ -6,8 +6,8 @@ import { rotateRemainingPathcardClockwise } from '../actions/index';
 
 import Tile from './Tile';
 
-const PlayerCards = ({ remainingPathCard, onRotateRemainingPathCard, game }) =>
-    remainingPathCard ? (
+const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
+    game.remainingPathCard ? (
         <div className="board">
             <div className="row">
                 <div className="box" />
@@ -15,9 +15,9 @@ const PlayerCards = ({ remainingPathCard, onRotateRemainingPathCard, game }) =>
                 <div className="box" />
                 <div className="box">
                     <Tile
-                        degrees={90 * remainingPathCard.direction}
-                        type={remainingPathCard.type}
-                        target={remainingPathCard.target}
+                        degrees={90 * game.remainingPathCard.direction}
+                        type={game.remainingPathCard.type}
+                        target={game.remainingPathCard.target}
                         onClick={() => onRotateRemainingPathCard(game)}
                     />
                 </div>
@@ -33,7 +33,6 @@ const PlayerCards = ({ remainingPathCard, onRotateRemainingPathCard, game }) =>
 const mapStateToProps = state => {
     return {
         game: state.game,
-        remainingPathCard: state.game.remainingPathCard,
     };
 };
 

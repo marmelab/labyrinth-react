@@ -128,7 +128,7 @@ export const buildBoard = () => {
         produce(board, draft => {
             row.forEach(card => {
                 const pathCard = createPathCard(card);
-                draft[pathCard.x][pathCard.y] = pathCard;
+                draft[pathCard.y][pathCard.x] = pathCard;
             });
         });
 
@@ -205,7 +205,7 @@ const dealCardsOnBoard = (board, shuffledPathDeck) => {
                         draftCard.x = x;
                         draftCard.y = y;
                     });
-                    draft[x][y] = newPathCard;
+                    draft[y][x] = newPathCard;
                 }
             });
         });

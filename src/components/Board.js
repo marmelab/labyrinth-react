@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tile from './Tile';
 import { connect } from 'react-redux';
+import { insertRemainingPathcardAt } from '../actions';
 
 const playerNumberToImageName = {
     0: 'images/piece_blue96.png',
@@ -31,12 +32,12 @@ const insert_positions = [
 
 const isInsertPosition = (x, y) => insert_positions.findIndex(position => position.x === x && position.y === y) > -1;
 
-export const Board = ({ board, players }) =>
-    board ? (
+export const Board = ({ game, onInsertRemainingPathCardAt }) =>
+    game.board ? (
         <div className="board">
             <div className="board-game" id="empty" />
             <div className="board-game" id="ground">
-                {board.map((row, rowIndex) => (
+                {game.board.map((row, rowIndex) => (
                     <div className="row" key={`board-game ${rowIndex}`}>
                         {row.map((pathCard, columnIndex) => (
                             <div className="box" key={`box ${rowIndex}-${columnIndex}`}>
@@ -47,12 +48,12 @@ export const Board = ({ board, players }) =>
                 ))}
             </div>
 
-            {players && (
+            {game.players && (
                 <div className="board-game" id="players">
-                    {board.map((row, rowIndex) => (
+                    {game.board.map((row, rowIndex) => (
                         <div className="row" key={`players ${rowIndex}`}>
                             {row.map((pathCard, columnIndex) => {
-                                const image = getPlayerImage(players, columnIndex, rowIndex);
+                                const image = getPlayerImage(game.players, columnIndex, rowIndex);
                                 return (
                                     <div className="box" key={`${columnIndex}-${rowIndex}`}>
                                         <div className="centered-content">
@@ -67,14 +68,14 @@ export const Board = ({ board, players }) =>
             )}
 
             <div className="board-game" id="insert-positions">
-                {board.map((row, rowIndex) => (
+                {game.board.map((row, rowIndex) => (
                     <div className="row" key={`insert-positions ${rowIndex}`}>
                         {row.map((_, columnIndex) => (
                             <div className="box" key={`${columnIndex}-${rowIndex}`}>
                                 {isInsertPosition(columnIndex, rowIndex) && (
-                                    <a
+                                    <div
                                         className="centered-content insert-position"
-                                        href={`insertRemainingPathCard/x/${columnIndex}/y/${rowIndex}`}
+                                        onClick={() => onInsertRemainingPathCardAt(game, columnIndex, rowIndex)}
                                     />
                                 )}
                             </div>
@@ -91,9 +92,19 @@ export const Board = ({ board, players }) =>
 
 const mapStateToProps = state => {
     return {
-        board: state.game.board,
-        players: state.game.players,
+        game: state.game,
     };
 };
 
-export default connect(mapStateToProps)(Board);
+const mapDispatchToProps = dispatch => {
+    return {
+        onInsertRemainingPathCardAt: (game, x, y) => {
+            dispatch(insertRemainingPathcardAt(game, x, y));
+        },
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Board);

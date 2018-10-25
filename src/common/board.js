@@ -23,7 +23,7 @@ export const createEmptyBoard = () => produce({}, () => Array(BOARD_SIZE).fill(A
 export const flattenBoard = board => board.reduce((acc, val) => acc.concat(val), []);
 
 export const putCardOnBoard = (mutableBoard, toX, toY, card) => {
-    mutableBoard[toX][toY] = movePathCardTo(card, toX, toY);
+    mutableBoard[toY][toX] = movePathCardTo(card, toX, toY);
 };
 
 export const getIndexPosition = ({ x, y }) =>
