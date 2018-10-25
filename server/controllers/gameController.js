@@ -6,9 +6,17 @@ import GameModel from '../database/gameModel';
 
 export const getIndex = (req, res) => res.status(200).json({ msg: 'Welcome to Labyrinth' });
 
-export const postCreateGame = (req, res) => {
-    const game = createGame();
-    let gameModel = new GameModel(game);
+export const getGame = (req, res) => {
+    GameModel.findById(req.params.id, function(err, gameDocument) {
+        if (err) {
+            res.status(400).send('unable to get the game');
+            return;
+        }
+        res.status(200).json(gameDocument);
+    });
+};
+
+const saveGameDocumentAndRespond = (res, gameModel) => {
     gameModel
         .save()
         .then(game => {
@@ -19,14 +27,10 @@ export const postCreateGame = (req, res) => {
         });
 };
 
-export const getGame = (req, res) => {
-    GameModel.findById(req.params.id, function(err, gameDocument) {
-        if (err) {
-            res.status(400).send('unable to get the game');
-            return;
-        }
-        res.status(200).json(gameDocument);
-    });
+export const postCreateGame = (req, res) => {
+    const game = createGame();
+    let gameDocument = new GameModel(game);
+    saveGameDocumentAndRespond(res, gameDocument);
 };
 
 const genericPostAction = (req, res, event, args) => {
@@ -39,14 +43,7 @@ const genericPostAction = (req, res, event, args) => {
         const context = Object.assign({ game: gameDocument.toObject() }, args);
         const newGame = handleEvent(event, context);
         gameDocument.set(newGame);
-        gameDocument
-            .save()
-            .then(game => {
-                res.status(200).json(game);
-            })
-            .catch(err => {
-                res.status(400).send('unable to save to database');
-            });
+        saveGameDocumentAndRespond(res, gameDocument);
     });
 };
 
@@ -57,6 +54,7 @@ export const postRotateRemainingPathCard = (req, res) => {
 export const postInsertRemainingPathCardAt = (req, res) => {
     genericPostAction(req, res, EVENT.INSERT_REMAINING_PATHCARD_AT, { x: req.body.x, y: req.body.y });
 };
+
 export const postMoveCurrentPlayerTo = (req, res) => {
     genericPostAction(req, res, EVENT.MOVE_PLAYER_TO, { x: req.body.x, y: req.body.y });
 };
