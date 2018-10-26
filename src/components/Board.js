@@ -65,21 +65,13 @@ export const Board = ({ game, onInsertRemainingPathCardAt, onMoveCurrentPlayerTo
         </div>
     );
 
-const mapStateToProps = state => {
-    return {
-        game: state.game,
-    };
-};
+const mapStateToProps = state => ({
+    game: state,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onInsertRemainingPathCardAt: (game, x, y) => {
-            dispatch(insertRemainingPathcardAt(game, x, y));
-        },
-        onMoveCurrentPlayerTo: (game, x, y) => {
-            dispatch(actionMoveCurrentPlayerTo(game, x, y));
-        },
-    };
+const mapDispatchToProps = {
+    onInsertRemainingPathCardAt: insertRemainingPathcardAt,
+    onMoveCurrentPlayerTo: actionMoveCurrentPlayerTo,
 };
 
 export default connect(

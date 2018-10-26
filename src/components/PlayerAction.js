@@ -24,9 +24,9 @@ export const PlayerAction = ({ game, x, y, onInsertRemainingPathCardAt, onMoveCu
         isGameInMoveState(game) && positionIsIn({ x, y }, game.reachablePositions[game.currentPlayerIndex]);
     const subClassName = renderInsertPosition ? 'insert-position' : renderMovePosition ? 'move-player' : '';
     const onClickFunction = renderInsertPosition
-        ? () => onInsertRemainingPathCardAt(game, x, y)
+        ? () => onInsertRemainingPathCardAt(game._id, x, y)
         : renderMovePosition
-            ? () => onMoveCurrentPlayerTo(game, x, y)
+            ? () => onMoveCurrentPlayerTo(game._id, x, y)
             : x => x;
     return <div className={`centered-content ${subClassName}`} onClick={onClickFunction} />;
 };

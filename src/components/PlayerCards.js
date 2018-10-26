@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { rotateRemainingPathcardClockwise } from '../actions/index';
+import { rotateRemainingPathcardClockwise } from '../actions';
 import Tile from './Tile';
 import { isGameInInsertState, isGameInMoveState } from '../../src/common/game';
 import { getCurrentTargetCard, getNumberOfRemainingTargetCard } from '../common/player';
@@ -24,7 +24,7 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
                         degrees={90 * game.remainingPathCard.direction}
                         type={game.remainingPathCard.type}
                         target={game.remainingPathCard.target}
-                        onClick={() => onRotateRemainingPathCard(game)}
+                        onClick={() => onRotateRemainingPathCard(game._id)}
                         isClickable={isGameInInsertState(game)}
                         isRemainingTile
                     />
@@ -54,18 +54,12 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
         <div className="board" />
     );
 
-const mapStateToProps = state => {
-    return {
-        game: state.game,
-    };
-};
+const mapStateToProps = state => ({
+    game: state,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onRotateRemainingPathCard: game => {
-            dispatch(rotateRemainingPathcardClockwise(game));
-        },
-    };
+const mapDispatchToProps = {
+    onRotateRemainingPathCard: rotateRemainingPathcardClockwise,
 };
 
 export default connect(
