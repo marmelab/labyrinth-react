@@ -93,8 +93,8 @@ describe('InitPlayers with 1 player', () => {
         expect(players).toHaveLength(1);
     });
 
-    it('should be yellow and be in (0,0)', () => {
-        expect(players[0].color).toEqual('yellow');
+    it('should be blue and be in (0,0)', () => {
+        expect(players[0].color).toEqual('blue');
         expect(players[0].x).toBe(0);
         expect(players[0].y).toBe(0);
         expect(players[0].targetCards).toHaveLength(0);
@@ -110,14 +110,14 @@ describe('InitPlayers with 4 player', () => {
         expect(players).toHaveLength(4);
     });
 
-    it('should assign the yellow color to player 0', () => {
-        expect(players[0].color).toEqual('yellow');
+    it('should assign the blue color to player 0', () => {
+        expect(players[0].color).toEqual('blue');
         expect(players[0].x).toBe(0);
         expect(players[0].y).toBe(0);
         expect(players[0].targetCards).toHaveLength(0);
     });
-    it('should assign the green color to player 1', () => {
-        expect(players[1].color).toEqual('green');
+    it('should assign the yellow color to player 1', () => {
+        expect(players[1].color).toEqual('yellow');
         expect(players[1].x).toBe(6);
         expect(players[1].y).toBe(6);
         expect(players[1].targetCards).toHaveLength(0);

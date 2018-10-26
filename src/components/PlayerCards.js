@@ -10,7 +10,7 @@ import Player from './Player';
 
 const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
     game.remainingPathCard ? (
-        <div className="board">
+        <div className="game-invite game-alignment">
             <div className="row">
                 <div className="box">
                     <div className="game-invite-current-player">
@@ -25,6 +25,7 @@ const PlayerCards = ({ game, onRotateRemainingPathCard }) =>
                         type={game.remainingPathCard.type}
                         target={game.remainingPathCard.target}
                         onClick={() => onRotateRemainingPathCard(game)}
+                        isClickable={isGameInInsertState(game)}
                         isRemainingTile
                     />
                 </div>

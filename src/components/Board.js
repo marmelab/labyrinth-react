@@ -10,7 +10,7 @@ const getPlayerIndex = (players, x, y) => players.findIndex(player => player.x =
 
 export const Board = ({ game, onInsertRemainingPathCardAt, onMoveCurrentPlayerTo }) =>
     game.board ? (
-        <div className="board">
+        <div className="game-alignment">
             <div className="board-game" id="empty" />
             <div className="board-game" id="ground">
                 {game.board.map((row, rowIndex) => (
