@@ -12,9 +12,17 @@ body {
     max-width: 700px;
 }
 
-.board {
+.game-alignment {
     max-width: 60vh;
     margin: 0 auto;
+}
+
+.game-invite {
+
+}
+
+.remaining-clickable {
+    background: rgba(0, 255, 0, 0.3);
 }
 
 #start-new-game {
@@ -63,7 +71,7 @@ body {
 
 #empty {
     position: relative;
-    margin-top: 100px;
+    margin-bottom: 100px;
     width: 100%;
 }
 
@@ -87,13 +95,17 @@ body {
 
 .move-player {
     border: solid 1px white;
-    background: rgba(0, 255, 0, 0.4);
+    background: rgba(0, 255, 0, 0.3);
 }
 
 .insert-position {
     animation: tile-blink 4s infinite;
     border: solid 1px white;
     background: rgba(255, 255, 255, 0.4);
+}
+
+.remaining-tile-image {
+    transition: transform 1s;
 }
 
 @keyframes tile-blink {

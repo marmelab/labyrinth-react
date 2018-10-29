@@ -36,7 +36,7 @@ export const putPlayersBackOnBoard = game =>
         );
     });
 
-const getNumberOfRemainingTargetCard = player => (player.targetCards || []).length;
+export const getNumberOfRemainingTargetCard = player => (player.targetCards || []).length;
 
 export const getCurrentTargetCard = player =>
     player.targetCards.length ? player.targetCards[player.targetCards.length - 1] : null;

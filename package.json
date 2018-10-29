@@ -57,6 +57,7 @@
     },
     "dependencies": {
         "axios": "^0.18.0",
+        "classnames": "^2.2.6",
         "cors": "^2.8.4",
         "express": "^4.16.4",
         "immer": "^1.7.2",
