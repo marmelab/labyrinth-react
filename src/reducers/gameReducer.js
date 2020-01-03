@@ -6,18 +6,29 @@ import {
     ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC,
     MOVE_CURRENT_PLAYER_TO,
     MOVE_CURRENT_PLAYER_TO_OPTIMISTIC,
-} from '../actions/types';
+} from '../actions';
 
-export default function gameReducer(state = [], action) {
+import { insertRemainingPathCardAt, moveCurrentPlayerTo, rotateRemainingPathCard } from '../common/game';
+
+export default function gameReducer(state = {}, action) {
     switch (action.type) {
         case CREATE_GAME_SUCCESS:
         case ROTATE_REMAINING_PATHCARD_CLOCKWISE:
-        case ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC:
         case INSERT_REMAINING_PATHCARD:
-        case INSERT_REMAINING_PATHCARD_OPTIMISTIC:
         case MOVE_CURRENT_PLAYER_TO:
-        case MOVE_CURRENT_PLAYER_TO_OPTIMISTIC:
             return action.payload;
+
+        case ROTATE_REMAINING_PATHCARD_CLOCKWISE_OPTIMISTIC:
+            return rotateRemainingPathCard(state);
+
+        case MOVE_CURRENT_PLAYER_TO_OPTIMISTIC: {
+            const { x, y } = action.payload;
+            return insertRemainingPathCardAt(state, x, y);
+        }
+        case INSERT_REMAINING_PATHCARD_OPTIMISTIC: {
+            const { x, y } = action.payload;
+            return moveCurrentPlayerTo(state, x, y);
+        }
         default:
             return state;
     }

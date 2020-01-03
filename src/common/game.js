@@ -297,7 +297,13 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
     return putPlayersBackOnBoard(newGameWithNewRemainingPathCard);
 };
 
-export const insertRemainingPathCardAt = (game, x, y) => {
+// display positions range from 0 to 6 (7 rows and columns)
+// whereas board positions range from -1 to 7 (1 extra row and column for inserting the remaining path card)
+const convertDisplayToBoard = x => (x === 0 ? -1 : x === 6 ? 7 : x);
+export const insertRemainingPathCardAt = (game, xDisplay, yDisplay) => {
+    const x = convertDisplayToBoard(xDisplay);
+    const y = convertDisplayToBoard(yDisplay);
+
     if (!isInsertionPosition({ x, y })) {
         return game;
     }
